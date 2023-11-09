@@ -3,6 +3,7 @@ import Wrapper from "../assets/wrappers/ErrorPage";
 import notFound from "../assets/images/not-found.svg";
 
 const Error: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const error: any = useRouteError();
 
   if (!error) {
