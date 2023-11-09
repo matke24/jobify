@@ -1,26 +1,23 @@
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { Logo } from "../components";
+import { FormRow, Logo } from "../components";
 import { Link } from "react-router-dom";
+import { FormRowProps } from "../components/props";
 
 const Register = () => {
+  const formRowProps: FormRowProps = {
+    name: "Name",
+    type: "text",
+    id: "name",
+    label: "Name",
+    placeholder: "Enter your name...",
+    required: true,
+  };
   return (
     <Wrapper>
       <form className="form">
         <Logo />
         <h4>Register</h4>
-        <div className="form-row">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className="form-input"
-            placeholder="Name..."
-            required
-          />
-        </div>
+        <FormRow {...formRowProps} />
         <button type="submit" className="btn btn-block">
           Submit
         </button>
