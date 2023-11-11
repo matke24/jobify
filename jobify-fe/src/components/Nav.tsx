@@ -4,12 +4,7 @@ import Logo from "./Logo";
 import { FaAlignLeft } from "react-icons/fa";
 
 const Nav = () => {
-  const dashboardContext = useDashboardContext();
-  if (!dashboardContext) {
-    return;
-  }
-
-  const { toggleSidebar } = dashboardContext;
+  const { toggleSidebar } = useDashboardContext();
   return (
     <Wrapper>
       <div className="nav-center">

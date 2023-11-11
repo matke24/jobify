@@ -1,4 +1,4 @@
-import { FormRowProps } from "../props";
+import { DashboardContextProps, FormRowProps } from "../props";
 
 export const FORM_ROWS_REGISTER: FormRowProps[] = [
   {
@@ -60,3 +60,14 @@ export const FORM_ROW_LOGIN = [
     required: true,
   },
 ];
+
+export const DEFAULT_DASHBOARD_CONTEXT: DashboardContextProps = {
+  user: {
+    name: "Default User",
+  },
+  showSideBar: false,
+  isDarkTheme: false,
+  toggleDarkTheme: () => {},
+  toggleSidebar: () => {},
+  logoutUser: () => {},
+};

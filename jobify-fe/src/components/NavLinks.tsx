@@ -3,12 +3,8 @@ import SMALL_SIDEBAR_LINKS from "../utils/Links";
 import { useDashboardContext } from "../pages/DashboardLayout";
 
 const NavLinks = () => {
-  const dashboardContext = useDashboardContext();
-  if (!dashboardContext) {
-    return;
-  }
+  const { toggleSidebar } = useDashboardContext();
 
-  const { toggleSidebar } = dashboardContext;
   return (
     <div className="nav-links">
       {SMALL_SIDEBAR_LINKS.map((link) => {
