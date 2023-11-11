@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
-import { FORM_ROW_LOGIN } from "./constants";
+import { FORM_ROW_LOGIN } from "../utils/constants";
 
 const Login = () => {
   return (

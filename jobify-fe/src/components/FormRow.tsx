@@ -1,4 +1,4 @@
-import { FormRowProps } from "./props";
+import { FormRowProps } from "../utils/props";
 
 const FormRow: React.FC<FormRowProps> = (props) => {
   const { id, type, name, placeholder, required, label }: FormRowProps = props;

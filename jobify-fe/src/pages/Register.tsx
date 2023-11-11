@@ -1,7 +1,7 @@
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { Link } from "react-router-dom";
-import { FORM_ROWS_REGISTER } from "./constants";
+import { FORM_ROWS_REGISTER } from "../utils/constants";
 
 const Register = () => {
   return (
