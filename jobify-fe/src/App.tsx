@@ -13,6 +13,9 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { checkDefaultTheme } from "./utils";
+
+checkDefaultTheme();
 
 const router = createBrowserRouter([
   {
