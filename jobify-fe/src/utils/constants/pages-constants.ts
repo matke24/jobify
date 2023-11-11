@@ -1,4 +1,4 @@
-import { FormRowProps } from "../../components/props";
+import { FormRowProps } from "../props";
 
 export const FORM_ROWS_REGISTER: FormRowProps[] = [
   {

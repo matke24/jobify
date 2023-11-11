@@ -7,6 +7,6 @@ export interface DashboardContextProps {
   showSideBar: boolean;
   isDarkTheme: boolean;
   toggleDarkTheme: () => void;
-  toggleSideBar: () => void;
+  toggleSidebar: () => void;
   logoutUser: () => void;
 }
