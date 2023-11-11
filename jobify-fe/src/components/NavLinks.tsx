@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import SMALL_SIDEBAR_LINKS from "../utils/Links";
+import SMALL_SIDEBAR_LINKS from "../utils/links";
 import { useDashboardContext } from "../pages/DashboardLayout";
 
 interface Props {
