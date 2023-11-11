@@ -1,7 +1,7 @@
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { Link } from "react-router-dom";
-import { FORM_ROWS } from "./constants";
+import { FORM_ROWS_REGISTER } from "./constants";
 
 const Register = () => {
   return (
@@ -9,7 +9,7 @@ const Register = () => {
       <form className="form">
         <Logo />
         <h4>Register</h4>
-        {FORM_ROWS.map((row, key) => {
+        {FORM_ROWS_REGISTER.map((row, key) => {
           return <FormRow key={key} {...row} />;
         })}
         <button type="submit" className="btn btn-block">
