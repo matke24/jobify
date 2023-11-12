@@ -12,12 +12,12 @@ const port = process.env.PORT || 5100;
 
 let jobs: Job[] = [
   {
-    id: nanoid(),
+    id: nanoid(10),
     company: "apple",
     position: "front-end",
   },
   {
-    id: nanoid(),
+    id: nanoid(10),
     company: "samsung",
     position: "backend-end",
   },
@@ -69,6 +69,19 @@ app.patch("/api/v1/jobs/:id", (req: Request, res: Response) => {
   job.position = position;
 
   res.status(200).json({ message: "Successfully updated", job });
+});
+// DELETE JOB
+app.delete("/api/v1/jobs/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+  const job: Job | undefined = jobs.find((job: Job) => job.id === id);
+
+  if (!job) {
+    return res.status(404).json({ message: "Job not found" });
+  }
+
+  const updatedJobsList: Job[] = jobs.filter((job: Job) => job.id !== id);
+  jobs = updatedJobsList;
+  res.status(200).json({ message: "Successfully deleted", jobs });
 });
 
 // CREATE JOB
