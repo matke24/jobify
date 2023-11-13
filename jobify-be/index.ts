@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { nanoid } from "nanoid";
@@ -102,6 +102,15 @@ app.post("/api/v1/jobs", (req: Request, res: Response) => {
   };
   jobs.push(job);
   res.status(201).json({ job });
+});
+
+app.use("*", (req: Request, res: Response) => {
+  res.status(404).json({ message: "Resource not found" });
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  res.status(500).json({ message: "Internal server error" });
 });
 
 app.listen(port, () => {
