@@ -1,18 +1,18 @@
 import { nanoid } from "nanoid";
-import { Job } from "../utils/props.js";
+import { JobModel } from "../types";
 import { Request, Response } from "express";
 
-let jobs: Job[] = [
-  {
-    id: nanoid(10),
-    company: "apple",
-    position: "front-end",
-  },
-  {
-    id: nanoid(10),
-    company: "samsung",
-    position: "backend-end",
-  },
+let jobs: JobModel[] = [
+  // {
+  //   id: nanoid(10),
+  //   company: "apple",
+  //   position: "front-end",
+  // },
+  // {
+  //   id: nanoid(10),
+  //   company: "samsung",
+  //   position: "backend-end",
+  // },
 ];
 
 export const getAllJobs = async (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ export const getAllJobs = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
-  const { company, position } = req.body;
+  const { company, position, jobStatus, jobType, jobLocation } = req.body;
 
   if (!company || !position) {
     return res
@@ -29,10 +29,13 @@ export const createJob = async (req: Request, res: Response) => {
   }
 
   const id = nanoid(10);
-  const job: Job = {
+  const job: JobModel = {
     id,
     company,
     position,
+    jobStatus,
+    jobType,
+    jobLocation,
   };
   jobs.push(job);
   res.status(201).json({ job });
@@ -40,7 +43,7 @@ export const createJob = async (req: Request, res: Response) => {
 
 export const getSingleJob = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const job: Job | undefined = jobs.find((job: Job) => job.id === id);
+  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
   if (!job) {
     return res.status(404).json({ message: "Job not found" });
   }
@@ -48,7 +51,7 @@ export const getSingleJob = async (req: Request, res: Response) => {
 };
 
 export const editJob = async (req: Request, res: Response) => {
-  const { company, position }: Job = req.body;
+  const { company, position }: JobModel = req.body;
 
   if (!company || !position) {
     return res
@@ -57,7 +60,7 @@ export const editJob = async (req: Request, res: Response) => {
   }
 
   const { id } = req.params;
-  const job: Job | undefined = jobs.find((job: Job) => job.id === id);
+  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
   if (!job) {
     return res.status(404).json({ message: "Job not found" });
   }
@@ -70,13 +73,15 @@ export const editJob = async (req: Request, res: Response) => {
 
 export const deleteJob = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const job: Job | undefined = jobs.find((job: Job) => job.id === id);
+  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
 
   if (!job) {
     return res.status(404).json({ message: "Job not found" });
   }
 
-  const updatedJobsList: Job[] = jobs.filter((job: Job) => job.id !== id);
+  const updatedJobsList: JobModel[] = jobs.filter(
+    (job: JobModel) => job.id !== id
+  );
   jobs = updatedJobsList;
   res.status(200).json({ message: "Successfully deleted", jobs });
 };
