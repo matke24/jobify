@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Job } from "../utils/props.js";
+import { Job } from "../types";
 import { Request, Response } from "express";
 
 let jobs: Job[] = [
