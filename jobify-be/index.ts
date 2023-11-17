@@ -4,6 +4,7 @@ dotenv.config();
 import express, { Express, NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import mongoose from "mongoose";
 
 //Routes
 import jobRouter from "./routes/jobRouter.js";
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("Hello from server");
 });
 
 app.use("/api/v1/jobs", jobRouter);
@@ -33,6 +34,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: "Internal server error" });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+try {
+  await mongoose.connect(process.env.MONGO_URL as string);
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+} catch (err) {
+  console.log(err);
+  process.exit(1);
+}
