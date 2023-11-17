@@ -1,3 +1,4 @@
+import "express-async-errors";
 import { Request, Response } from "express";
 
 import { JobModel } from "../types";
@@ -20,15 +21,7 @@ export const getAllJobs = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
-  const { company, position, jobStatus, jobType, jobLocation } = req.body;
-  const job = await Job.create({
-    company,
-    position,
-    jobStatus,
-    jobType,
-    jobLocation,
-  });
-
+  const job = await Job.create(req.body);
   res.status(201).json({ job });
 };
 
