@@ -14,7 +14,7 @@ export enum JobType {
 }
 
 export interface JobModel {
-  id: string;
+  id?: string;
   company: string;
   position: string;
   jobStatus: JobStatus;
