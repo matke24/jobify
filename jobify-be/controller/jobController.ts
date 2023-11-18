@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
 import { StatusCode } from "../enum/status-code.js";
-import { NotFoundError } from "../error/NotFoundError.js";
+import { NotFoundError } from "../error/customErrors.js";
 import { CANNOT_CREATE_JOB, SUCCESSFULLY_UPDATED } from "../const/job-const.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
