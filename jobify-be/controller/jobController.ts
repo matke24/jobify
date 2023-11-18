@@ -1,87 +1,58 @@
-import { nanoid } from "nanoid";
-import { JobModel } from "../types";
+import "express-async-errors";
 import { Request, Response } from "express";
 
-let jobs: JobModel[] = [
-  // {
-  //   id: nanoid(10),
-  //   company: "apple",
-  //   position: "front-end",
-  // },
-  // {
-  //   id: nanoid(10),
-  //   company: "samsung",
-  //   position: "backend-end",
-  // },
-];
+import { JobBackendModel } from "../types";
+import Job from "../models/JobModel.js";
+import { StatusCode } from "../enum/status-code.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  res.status(200).json({ jobs });
-};
-
-export const createJob = async (req: Request, res: Response) => {
-  const { company, position, jobStatus, jobType, jobLocation } = req.body;
-
-  if (!company || !position) {
-    return res
-      .status(400)
-      .json({ message: "Please provide company and position" });
-  }
-
-  const id = nanoid(10);
-  const job: JobModel = {
-    id,
-    company,
-    position,
-    jobStatus,
-    jobType,
-    jobLocation,
-  };
-  jobs.push(job);
-  res.status(201).json({ job });
+  const jobs: JobBackendModel[] | null = await Job.find({});
+  res.status(StatusCode.OK).json({ jobs });
 };
 
 export const getSingleJob = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
+  const job: JobBackendModel | null = await Job.findById(id);
+
   if (!job) {
-    return res.status(404).json({ message: "Job not found" });
+    return res.status(StatusCode.NOT_FOUND).json({ message: "Job not found" });
   }
-  res.status(200).json({ job });
+  res.status(StatusCode.OK).json({ job });
+};
+
+export const createJob = async (req: Request, res: Response) => {
+  const job: JobBackendModel | null = await Job.create(req.body);
+  res.status(StatusCode.CREATED).json({ job });
 };
 
 export const editJob = async (req: Request, res: Response) => {
-  const { company, position }: JobModel = req.body;
+  const { id } = req.params;
+  const editedJob: JobBackendModel | null = await Job.findByIdAndUpdate(
+    id,
+    req.body,
+    {
+      new: true,
+    }
+  );
 
-  if (!company || !position) {
+  if (!editedJob) {
     return res
-      .status(400)
+      .status(StatusCode.BAD_REQUEST)
       .json({ message: "Please provide company and position" });
   }
-
-  const { id } = req.params;
-  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
-  if (!job) {
-    return res.status(404).json({ message: "Job not found" });
-  }
-
-  job.company = company;
-  job.position = position;
-
-  res.status(200).json({ message: "Successfully updated", job });
+  res
+    .status(StatusCode.OK)
+    .json({ message: "Successfully updated", job: editedJob });
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const job: JobModel | undefined = jobs.find((job: JobModel) => job.id === id);
+  const removedJob: JobBackendModel | null = await Job.findByIdAndDelete(id);
 
-  if (!job) {
-    return res.status(404).json({ message: "Job not found" });
+  if (!removedJob) {
+    return res.status(StatusCode.NOT_FOUND).json({ message: "Job not found" });
   }
-
-  const updatedJobsList: JobModel[] = jobs.filter(
-    (job: JobModel) => job.id !== id
-  );
-  jobs = updatedJobsList;
-  res.status(200).json({ message: "Successfully deleted", jobs });
+  res
+    .status(StatusCode.OK)
+    .json({ message: "Successfully deleted", job: removedJob });
 };
