@@ -10,6 +10,7 @@ import { connect } from "./api/db-connect.js";
 import jobRouter from "./routes/jobRouter.js";
 import { StatusCode } from "./enum/status-code.js";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+import { validateTest } from "./middleware/validationHandlerMiddleware.js";
 
 const app: Express = express();
 const port = process.env.PORT || 5100;
@@ -20,6 +21,11 @@ app.use(express.json());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.post("/api/v1/test", validateTest, (req: Request, res: Response) => {
+  const { name } = req.body;
+  res.json({ message: `Hello ${name}` });
+});
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from server");
