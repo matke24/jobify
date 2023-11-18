@@ -4,6 +4,8 @@ import { Request, Response } from "express";
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
 import { StatusCode } from "../enum/status-code.js";
+import { NotFoundError } from "../error/NotFoundError.js";
+import { CANNOT_CREATE_JOB, SUCCESSFULLY_UPDATED } from "../const/job-const.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
   const jobs: JobBackendModel[] | null = await Job.find({});
@@ -15,13 +17,18 @@ export const getSingleJob = async (req: Request, res: Response) => {
   const job: JobBackendModel | null = await Job.findById(id);
 
   if (!job) {
-    return res.status(StatusCode.NOT_FOUND).json({ message: "Job not found" });
+    throw new NotFoundError(`Cannot find a job with id: ${id}`);
   }
   res.status(StatusCode.OK).json({ job });
 };
 
 export const createJob = async (req: Request, res: Response) => {
   const job: JobBackendModel | null = await Job.create(req.body);
+
+  if (!job) {
+    throw new NotFoundError(CANNOT_CREATE_JOB);
+  }
+
   res.status(StatusCode.CREATED).json({ job });
 };
 
@@ -35,14 +42,13 @@ export const editJob = async (req: Request, res: Response) => {
     }
   );
 
-  if (!editedJob) {
-    return res
-      .status(StatusCode.BAD_REQUEST)
-      .json({ message: "Please provide company and position" });
+  if (!editJob) {
+    throw new NotFoundError(`Cannot find a job with id: ${id}`);
   }
+
   res
     .status(StatusCode.OK)
-    .json({ message: "Successfully updated", job: editedJob });
+    .json({ message: SUCCESSFULLY_UPDATED, job: editedJob });
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
@@ -50,7 +56,7 @@ export const deleteJob = async (req: Request, res: Response) => {
   const removedJob: JobBackendModel | null = await Job.findByIdAndDelete(id);
 
   if (!removedJob) {
-    return res.status(StatusCode.NOT_FOUND).json({ message: "Job not found" });
+    throw new NotFoundError(`Cannot find a job with id: ${id}`);
   }
   res
     .status(StatusCode.OK)

@@ -9,6 +9,7 @@ import { connect } from "./api/db-connect.js";
 //Routes
 import jobRouter from "./routes/jobRouter.js";
 import { StatusCode } from "./enum/status-code.js";
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 const app: Express = express();
 const port = process.env.PORT || 5100;
@@ -30,12 +31,7 @@ app.use("*", (req: Request, res: Response) => {
   res.status(StatusCode.NOT_FOUND).json({ message: "Resource not found" });
 });
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
-  res
-    .status(StatusCode.INTERNAL_SERVER_ERROR)
-    .json({ message: "Internal server error" });
-});
+app.use(errorHandlerMiddleware);
 
 try {
   connect();
