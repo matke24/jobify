@@ -12,3 +12,10 @@ export enum JobType {
   REMOTE = "remote",
   INTERNSHIP = "internship",
 }
+
+export enum JobSort {
+  NEWEST_FIRST = "newest",
+  OLDEST_FIRST = "oldest",
+  ASCENDING = "a-z",
+  DESCENDING = "z-a",
+}

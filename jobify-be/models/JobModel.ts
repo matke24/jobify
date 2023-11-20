@@ -9,12 +9,12 @@ const JobSchema = new Schema<JobBackendModel>(
     position: String,
     jobStatus: {
       type: String,
-      enum: JobStatus,
+      enum: Object.values(JobStatus),
       default: JobStatus.PENDING,
     },
     jobType: {
       type: String,
-      enum: JobType,
+      enum: Object.values(JobType),
       default: JobType.FULL_TIME,
     },
     jobLocation: {
