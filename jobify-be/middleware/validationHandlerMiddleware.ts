@@ -1,10 +1,13 @@
-import { body, validationResult, ValidationChain } from "express-validator";
+import {
+  body,
+  param,
+  validationResult,
+  ValidationChain,
+} from "express-validator";
+import mongoose from "mongoose";
 import { BadRequestError } from "../error/customErrors.js";
 import { NextFunction, RequestHandler } from "express";
-import {
-  EMPTY_NAME_ERROR_MESSAGE,
-  NAME_LENGTH_ERROR_MESSAGE,
-} from "../const/job-const.js";
+import { JobStatus, JobType } from "../enum/job.js";
 
 const withValidationError = (
   validateValues: ValidationChain[]
@@ -26,11 +29,20 @@ const withValidationError = (
     },
   ] as any;
 
-export const validateTest: RequestHandler[] = withValidationError([
-  body("name")
-    .notEmpty()
-    .withMessage(EMPTY_NAME_ERROR_MESSAGE)
-    .isLength({ min: 3, max: 50 })
-    .withMessage(NAME_LENGTH_ERROR_MESSAGE)
-    .trim(),
+export const validateJobInput: RequestHandler[] = withValidationError([
+  body("company").notEmpty().withMessage("Company is required"),
+  body("position").notEmpty().withMessage("Position is required"),
+  body("jobLocation").notEmpty().withMessage("Location is required"),
+  body("jobStatus")
+    .isIn(Object.values(JobStatus))
+    .withMessage("Invalid status value"),
+  body("jobType")
+    .isIn(Object.values(JobType))
+    .withMessage("Invalid type value"),
+]);
+
+export const validateJobId: RequestHandler[] = withValidationError([
+  param("id")
+    .custom((value) => mongoose.Types.ObjectId.isValid(value))
+    .withMessage("Invalid ID"),
 ]);
