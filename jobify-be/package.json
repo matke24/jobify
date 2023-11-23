@@ -1,6 +1,6 @@
 {
   "name": "jobify-be",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,10 @@
     "test:watch": "jest --watchAll",
     "build": "npx tsc",
     "start": "node --experimental-specifier-resolution=node dist/index.js",
-    "dev": "nodemon -I --exec node --experimental-specifier-resolution=node --loader ts-node/esm ./index.ts"
+    "dev": "nodemon -I --exec node --experimental-specifier-resolution=node --loader ts-node/esm ./index.ts",
+    "version:patch": "npm version patch -git-tag-version false",
+    "version:minor": "npm version minor -git-tag-version false",
+    "version:major": "npm version major -git-tag-version false"
   },
   "keywords": [],
   "author": "",
