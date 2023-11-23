@@ -1,15 +1,20 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Express, NextFunction, Request, Response } from "express";
+import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { connect } from "./api/db-connect.js";
+import { connect } from "./api/index.js";
 
 //Routes
 import jobRouter from "./routes/jobRouter.js";
-import { StatusCode } from "./enum/status-code.js";
+import authRouter from "./routes/authRouter.js";
+
+// Errors
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+
+// Constants, enums, types
+import { StatusCode } from "./enum/index.js";
 
 const app: Express = express();
 const port = process.env.PORT || 5100;
@@ -26,6 +31,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req: Request, res: Response) => {
   res.status(StatusCode.NOT_FOUND).json({ message: "Resource not found" });

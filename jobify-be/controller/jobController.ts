@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
-import { StatusCode } from "../enum/status-code.js";
-import { SUCCESSFULLY_UPDATED } from "../const/job-const.js";
+import { StatusCode } from "../enum/index.js";
+import { SUCCESSFULLY_UPDATED } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
   const jobs: JobBackendModel[] | null = await Job.find({});

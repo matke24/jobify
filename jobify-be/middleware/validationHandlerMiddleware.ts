@@ -5,9 +5,9 @@ import {
   ValidationChain,
 } from "express-validator";
 import mongoose from "mongoose";
-import { BadRequestError, NotFoundError } from "../error/customErrors.js";
+import { BadRequestError, NotFoundError } from "../error/index.js";
 import { NextFunction, RequestHandler } from "express";
-import { JobStatus, JobType } from "../enum/job.js";
+import { JobStatus, JobType } from "../enum/index.js";
 import { JobBackendModel } from "../types/index.js";
 import Job from "../models/JobModel.js";
 
