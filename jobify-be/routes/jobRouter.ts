@@ -9,7 +9,7 @@ import {
 import {
   validateJobInput,
   validateIdParam,
-} from "../middleware/validationHandlerMiddleware.js";
+} from "../middleware/jobHandlerMiddleware.js";
 
 const router = Router();
 
