@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { UserBackendModel } from "../types/index.js";
 import { UserRole } from "../enum/index.js";
-import exp from "constants";
 
 const UserSchema = new mongoose.Schema<UserBackendModel>({
   fname: String,
