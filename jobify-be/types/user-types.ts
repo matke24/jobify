@@ -1,4 +1,4 @@
-import { UserRole } from "../enum/user.js";
+import { UserRole } from "../enum/index.js";
 
 export interface UserBackendModel {
   fname: string;

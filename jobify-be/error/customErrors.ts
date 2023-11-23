@@ -1,4 +1,4 @@
-import { StatusCode } from "../enum/status-code.js";
+import { StatusCode } from "../enum/index.js";
 
 export class NotFoundError extends Error {
   private statusCode: StatusCode;

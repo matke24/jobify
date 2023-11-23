@@ -5,7 +5,7 @@ import {
   editJob,
   deleteJob,
   createJob,
-} from "../controller/jobController.js";
+} from "../controller/index.js";
 import {
   validateJobInput,
   validateIdParam,

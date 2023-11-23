@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 import { JobBackendModel } from "../types";
-import { JobStatus, JobType } from "../enum/job.js";
+import { JobStatus, JobType } from "../enum/index.js";
 
 const JobSchema = new Schema<JobBackendModel>(
   {

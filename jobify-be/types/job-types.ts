@@ -1,4 +1,4 @@
-import { JobStatus, JobType } from "../enum/job.js";
+import { JobStatus, JobType } from "../enum/index.js";
 
 export interface JobBackendModel {
   _id: string;

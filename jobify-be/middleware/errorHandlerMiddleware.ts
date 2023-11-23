@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { StatusCode } from "../enum/status-code.js";
-import { ErrorType } from "../types/error-types.js";
+import { StatusCode } from "../enum/index.js";
+import { ErrorType } from "../types/index.js";
 
 const DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later.";
 
