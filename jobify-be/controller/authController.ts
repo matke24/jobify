@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import User from "../models/UserModel.js";
-import { UserBackendModel } from "../types/index.js";
 import { StatusCode, UserRole } from "../enum/index.js";
-import { hashPassword } from "../utils/passwordUtils.js";
+import { comparePasswords, hashPassword } from "../utils/passwordUtils.js";
+import { UnauthenticatedError } from "../error/customErrors.js";
+import { UserBackendModel } from "../types/user-types.js";
 
 export const registerController = async (req: Request, res: Response) => {
   const isFirstUser = (await User.countDocuments()) === 0;
@@ -15,5 +16,14 @@ export const registerController = async (req: Request, res: Response) => {
 };
 
 export const loginController = async (req: Request, res: Response) => {
+  const user: UserBackendModel | null = await User.findOne({
+    email: req.body.email,
+  });
+  const isUserValid: boolean | null =
+    user && (await comparePasswords(req.body.password, user.password));
+
+  if (!isUserValid) {
+    throw new UnauthenticatedError("User does not exist");
+  }
   res.send("Login");
 };
