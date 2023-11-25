@@ -4,6 +4,7 @@ dotenv.config();
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connect } from "./api/index.js";
 
 //Routes
@@ -23,6 +24,7 @@ const app: Express = express();
 const port = process.env.PORT || 5100;
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 if (process.env.NODE_ENV === "development") {
