@@ -21,6 +21,10 @@ const JobSchema = new Schema<JobBackendModel>(
       type: String,
       default: "Unknown",
     },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

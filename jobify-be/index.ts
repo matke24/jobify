@@ -16,6 +16,9 @@ import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 // Constants, enums, types
 import { StatusCode } from "./enum/index.js";
 
+// Middlewares
+import { authenticateUser } from "./middleware/index.js";
+
 const app: Express = express();
 const port = process.env.PORT || 5100;
 
@@ -30,7 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello from server");
 });
 
-app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req: Request, res: Response) => {
