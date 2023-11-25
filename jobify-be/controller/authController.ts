@@ -4,6 +4,7 @@ import { StatusCode, UserRole } from "../enum/index.js";
 import { comparePasswords, hashPassword } from "../utils/passwordUtils.js";
 import { UnauthenticatedError } from "../error/customErrors.js";
 import { UserBackendModel } from "../types/user-types.js";
+import { createJWT } from "../utils/token.js";
 
 export const registerController = async (req: Request, res: Response) => {
   const isFirstUser = (await User.countDocuments()) === 0;
@@ -25,5 +26,11 @@ export const loginController = async (req: Request, res: Response) => {
   if (!isUserValid) {
     throw new UnauthenticatedError("User does not exist");
   }
-  res.send("Login");
+
+  const token = createJWT({
+    userId: user!._id,
+    role: user!.role,
+  });
+
+  res.json({ token });
 };
