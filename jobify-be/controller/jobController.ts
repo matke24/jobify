@@ -7,7 +7,9 @@ import { StatusCode } from "../enum/index.js";
 import { SUCCESSFULLY_UPDATED } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const jobs: JobBackendModel[] | null = await Job.find({});
+  const jobs: JobBackendModel[] | null = await Job.find({
+    author: req.user?.userId,
+  });
   res.status(StatusCode.OK).json({ jobs });
 };
 
@@ -17,6 +19,7 @@ export const getSingleJob = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
+  req.body.author = req.user?.userId;
   const job: JobBackendModel | null = await Job.create(req.body);
   res.status(StatusCode.CREATED).json({ job });
 };
