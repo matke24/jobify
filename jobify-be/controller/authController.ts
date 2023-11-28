@@ -40,3 +40,12 @@ export const loginController = async (req: Request, res: Response) => {
   });
   res.status(StatusCode.OK).json({ message: "Success" });
 };
+
+export const logoutController = (req: Request, res: Response) => {
+  console.log(res.cookie);
+  res.cookie(COOKIE_NAME, "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCode.OK).json({ message: "Logout successful" });
+};
