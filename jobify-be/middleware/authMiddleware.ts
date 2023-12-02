@@ -3,7 +3,7 @@ import { UnauthenticatedError } from "../error/index.js";
 import { verifyJWT } from "../utils/token.js";
 import { JWToken } from "../types/index.js";
 
-export const authenticateUser = async (
+export const authenticateUser = (
   req: Request,
   _res: Response,
   next: NextFunction
