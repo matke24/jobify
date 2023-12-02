@@ -14,5 +14,8 @@ export const getAppStats = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
+  const obj = { ...req.body };
+  delete obj.password;
+  await User.findByIdAndUpdate(req.user?.userId, obj);
   res.status(StatusCode.OK).json({ message: "update user" });
 };
