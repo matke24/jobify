@@ -4,7 +4,9 @@ import User from "../models/UserModel.js";
 import Job from "../models/JobModel.js";
 
 export const getCurrentUser = async (req: Request, res: Response) => {
-  res.status(StatusCode.OK).json({ message: "get current user" });
+  const user = await User.findById(req.user?.userId);
+  const userToJSON = user?.toJSON();
+  res.status(StatusCode.OK).json({ user: userToJSON });
 };
 
 export const getAppStats = async (req: Request, res: Response) => {
