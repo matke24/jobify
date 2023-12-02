@@ -6,17 +6,15 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connect } from "./api/index.js";
-
 //Routes
 import jobRouter from "./routes/jobRouter.js";
 import authRouter from "./routes/authRouter.js";
-
+import userRouter from "./routes/userRouter.js";
 // Errors
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
-
 // Constants, enums, types
 import { StatusCode } from "./enum/index.js";
-
+import { API_URL } from "./const/index.js";
 // Middlewares
 import { authenticateUser } from "./middleware/index.js";
 
@@ -35,10 +33,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello from server");
 });
 
-app.use("/api/v1/jobs", authenticateUser, jobRouter);
-app.use("/api/v1/auth", authRouter);
+app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
+app.use(`${API_URL}/users`, authenticateUser, userRouter);
+app.use(`${API_URL}/auth`, authRouter);
 
-app.use("*", (req: Request, res: Response) => {
+app.use("*", (_req: Request, res: Response) => {
   res.status(StatusCode.NOT_FOUND).json({ message: "Resource not found" });
 });
 
