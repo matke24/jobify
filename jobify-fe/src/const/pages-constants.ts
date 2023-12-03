@@ -1,4 +1,4 @@
-import { DashboardContextProps, FormRowProps } from "../props";
+import { DashboardContextProps, FormRowProps } from "../utils/props";
 
 export const FORM_ROWS_REGISTER: FormRowProps[] = [
   {
