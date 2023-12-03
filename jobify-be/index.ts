@@ -33,9 +33,6 @@ app.get("/", (_req: Request, res: Response) => {
   res.send("Hello from server");
 });
 
-app.get(`${API_URL}/test`, (_req: Request, res: Response) => {
-  res.json({ message: "Test route" });
-});
 app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
 app.use(`${API_URL}/users`, authenticateUser, userRouter);
 app.use(`${API_URL}/auth`, authRouter);
