@@ -3,13 +3,18 @@ import { Request, Response } from "express";
 
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
-import { StatusCode } from "../enum/index.js";
+import { StatusCode, UserRole } from "../enum/index.js";
 import { SUCCESSFULLY_UPDATED } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const jobs: JobBackendModel[] | null = await Job.find({
-    author: req.user?.userId,
-  });
+  const isUserAdmin = req.user?.role === UserRole.ADMIN;
+  console.log(isUserAdmin);
+  const query = isUserAdmin
+    ? {}
+    : {
+        author: req.user?.userId,
+      };
+  const jobs: JobBackendModel[] | null = await Job.find(query);
   res.status(StatusCode.OK).json({ jobs });
 };
 

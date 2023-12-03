@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthenticatedError } from "../error/index.js";
+import { UnauthenticatedError, UnauthorizedError } from "../error/index.js";
 import { verifyJWT } from "../utils/token.js";
 import { JWToken } from "../types/index.js";
 
-export const authenticateUser = async (
+export const authenticateUser = (
   req: Request,
   _res: Response,
   next: NextFunction
@@ -20,4 +20,15 @@ export const authenticateUser = async (
   } catch (error) {
     throw new UnauthenticatedError("Authentication invalid");
   }
+};
+
+export const authorizePermission = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (req.user && !roles.includes(req.user.role)) {
+      throw new UnauthorizedError(
+        "You are not authorized to access this page."
+      );
+    }
+    next();
+  };
 };
