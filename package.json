@@ -1,0 +1,18 @@
+{
+  "name": "jobify",
+  "version": "1.0.0",
+  "description": "### App will handle login/registration, ### Creating, Deleting, Editing, and Listing Jobs ### Analytics",
+  "main": "index.js",
+  "scripts": {
+    "setup-project": "cd jobify-be && npm ci && cd ../jobify-fe && npm ci",
+    "server": "cd jobify-be && npm run dev",
+    "client": "cd jobify-fe && npm run dev",
+    "dev": "concurrently --kill-others-on-fail \" npm run server \" \" npm run client \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

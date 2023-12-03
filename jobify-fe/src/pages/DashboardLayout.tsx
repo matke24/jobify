@@ -3,7 +3,7 @@ import Wrapper from "../assets/wrappers/Dashboard";
 import { SmallSidebar, BigSidebar, Nav } from "../components";
 import { createContext, useContext, useState } from "react";
 import { DashboardContextProps } from "../utils/props";
-import { DEFAULT_DASHBOARD_CONTEXT } from "../utils/constants";
+import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
 import { checkDefaultTheme, resolveThemeState } from "../utils";
 
 const DashboardContext = createContext<DashboardContextProps>(
