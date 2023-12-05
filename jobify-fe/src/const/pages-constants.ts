@@ -1,8 +1,8 @@
-import { DashboardContextProps, FormRowProps } from "../utils/props";
+import { DashboardContextProps, FormRowProps } from "../types";
 
 export const FORM_ROWS_REGISTER: FormRowProps[] = [
   {
-    name: "first_name",
+    name: "fname",
     type: "text",
     id: "fname",
     label: "First Name",
@@ -10,11 +10,18 @@ export const FORM_ROWS_REGISTER: FormRowProps[] = [
     required: true,
   },
   {
-    name: "last_name",
+    name: "lname",
     type: "text",
     id: "lname",
     label: "Last Name",
     placeholder: "Enter your last name...",
+    required: true,
+  },
+  {
+    name: "location",
+    type: "text",
+    id: "location",
+    label: "Location",
     required: true,
   },
   {
@@ -33,13 +40,13 @@ export const FORM_ROWS_REGISTER: FormRowProps[] = [
     placeholder: "Enter your password...",
     required: true,
   },
-  {
-    name: "phone",
-    type: "text",
-    id: "phone",
-    label: "Phone",
-    placeholder: "Enter your phone...",
-  },
+  // {
+  //   name: "phone",
+  //   type: "text",
+  //   id: "phone",
+  //   label: "Phone",
+  //   placeholder: "Enter your phone...",
+  // },
 ];
 
 export const FORM_ROW_LOGIN = [

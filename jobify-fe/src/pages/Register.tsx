@@ -1,12 +1,12 @@
+import { Form, useNavigation, Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
-import { Link } from "react-router-dom";
 import { FORM_ROWS_REGISTER } from "../const";
 
 const Register = () => {
   return (
     <Wrapper>
-      <form className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Register</h4>
         {FORM_ROWS_REGISTER.map((row, key) => {
@@ -21,7 +21,7 @@ const Register = () => {
             Login
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
 };

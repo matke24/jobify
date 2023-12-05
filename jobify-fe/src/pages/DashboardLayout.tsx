@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { SmallSidebar, BigSidebar, Nav } from "../components";
 import { createContext, useContext, useState } from "react";
-import { DashboardContextProps } from "../utils/props";
+import { DashboardContextProps } from "../types";
 import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
 import { checkDefaultTheme, resolveThemeState } from "../utils";
 
