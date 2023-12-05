@@ -13,7 +13,7 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkDefaultTheme } from "./utils";
+import { checkDefaultTheme, formAction as registerFrom } from "./utils";
 
 checkDefaultTheme();
 
@@ -30,6 +30,7 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+        action: registerFrom,
       },
       {
         path: "login",
