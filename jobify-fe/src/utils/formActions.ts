@@ -1,24 +1,29 @@
-import { ActionFunction, ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { serviceFactory } from "./";
-import { REGISTRATION_SUCCESSFUL } from "../const";
+import { isRegisterForm, serviceFactory } from "./";
+import { MIN_PASSWORD_LENGTH, PASSWORD_TOO_SHORT } from "../const";
 import { AxiosError } from "axios";
 
-export const formAction: ActionFunction = async ({
-  request,
-}: ActionFunctionArgs) => {
-  const formData: FormData = await request.formData();
-  const data = Object.fromEntries(formData);
+export const createAuthForm =
+  (path: string, relocate: string) =>
+  async ({ request }: ActionFunctionArgs) => {
+    const formData: FormData = await request.formData();
+    const data = Object.fromEntries(formData);
 
-  try {
-    await serviceFactory().post("/auth/register", data);
-    toast.success(REGISTRATION_SUCCESSFUL);
-    return redirect("/login");
-  } catch (error: unknown) {
-    if (error instanceof AxiosError)
-      toast.error(error?.response?.data?.message);
+    if ((data.password as string).length < MIN_PASSWORD_LENGTH) {
+      toast.error(PASSWORD_TOO_SHORT);
+      return null;
+    }
 
-    return null;
-  }
-};
+    try {
+      await serviceFactory().post(path, data);
+      toast.success(isRegisterForm(path));
+      return redirect(relocate);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.response?.data?.message);
+      }
+      return error;
+    }
+  };

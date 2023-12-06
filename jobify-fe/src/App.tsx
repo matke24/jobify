@@ -13,9 +13,12 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkDefaultTheme, formAction as registerFrom } from "./utils";
+import { checkDefaultTheme, createAuthForm, dashboardLoader } from "./utils";
 
 checkDefaultTheme();
+
+const formActionLogin = createAuthForm("/auth/login", "/dashboard");
+const formActionRegister = createAuthForm("/auth/register", "/login");
 
 const router = createBrowserRouter([
   {
@@ -28,17 +31,19 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "register",
-        element: <Register />,
-        action: registerFrom,
-      },
-      {
         path: "login",
         element: <Login />,
+        action: formActionLogin,
+      },
+      {
+        path: "register",
+        element: <Register />,
+        action: formActionRegister,
       },
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,

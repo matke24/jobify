@@ -1,12 +1,14 @@
-export interface User {
-  name: string;
-}
+import { UserData } from ".";
 
 export interface DashboardContextProps {
-  user: User;
+  user: UserData;
   showSideBar: boolean;
   isDarkTheme: boolean;
   toggleDarkTheme: () => void;
   toggleSidebar: () => void;
   logoutUser: () => void;
+}
+
+export interface ErrorMessage {
+  message: string;
 }

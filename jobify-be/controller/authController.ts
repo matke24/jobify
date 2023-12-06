@@ -42,7 +42,6 @@ export const loginController = async (req: Request, res: Response) => {
 };
 
 export const logoutController = (req: Request, res: Response) => {
-  console.log(res.cookie);
   res.cookie(COOKIE_NAME, "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
