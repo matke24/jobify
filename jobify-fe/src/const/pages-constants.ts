@@ -22,6 +22,7 @@ export const FORM_ROWS_REGISTER: FormRowProps[] = [
     type: "text",
     id: "location",
     label: "Location",
+    placeholder: "Enter your location...",
     required: true,
   },
   {
@@ -40,13 +41,6 @@ export const FORM_ROWS_REGISTER: FormRowProps[] = [
     placeholder: "Enter your password...",
     required: true,
   },
-  // {
-  //   name: "phone",
-  //   type: "text",
-  //   id: "phone",
-  //   label: "Phone",
-  //   placeholder: "Enter your phone...",
-  // },
 ];
 
 export const FORM_ROW_LOGIN = [
@@ -70,7 +64,13 @@ export const FORM_ROW_LOGIN = [
 
 export const DEFAULT_DASHBOARD_CONTEXT: DashboardContextProps = {
   user: {
-    name: "Default User",
+    _id: "",
+    _v: 0,
+    fname: "",
+    lname: "",
+    location: "",
+    email: "",
+    password: "",
   },
   showSideBar: false,
   isDarkTheme: false,

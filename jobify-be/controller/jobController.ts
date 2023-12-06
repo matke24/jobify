@@ -8,7 +8,6 @@ import { SUCCESSFULLY_UPDATED } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
   const isUserAdmin = req.user?.role === UserRole.ADMIN;
-  console.log(isUserAdmin);
   const query = isUserAdmin
     ? {}
     : {
