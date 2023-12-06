@@ -27,3 +27,22 @@ export const createAuthForm =
       return error;
     }
   };
+
+export const formActionLogin = createAuthForm("/auth/login", "/dashboard");
+export const formActionRegister = createAuthForm("/auth/register", "/login");
+
+export const addJobAction = async ({ request }: ActionFunctionArgs) => {
+  const formData: FormData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await serviceFactory().post("/jobs", data);
+    toast.success("Job created");
+    return null;
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      toast.error(err?.response?.data?.message);
+    }
+    return err;
+  }
+};

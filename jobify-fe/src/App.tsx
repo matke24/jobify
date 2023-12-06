@@ -13,12 +13,15 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkDefaultTheme, createAuthForm, dashboardLoader } from "./utils";
+import {
+  addJobAction,
+  checkDefaultTheme,
+  dashboardLoader,
+  formActionLogin,
+  formActionRegister,
+} from "./utils";
 
 checkDefaultTheme();
-
-const formActionLogin = createAuthForm("/auth/login", "/dashboard");
-const formActionRegister = createAuthForm("/auth/register", "/login");
 
 const router = createBrowserRouter([
   {
@@ -48,6 +51,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AddJob />,
+            action: addJobAction,
           },
           {
             path: "stats",
