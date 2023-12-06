@@ -8,3 +8,7 @@ export interface DashboardContextProps {
   toggleSidebar: () => void;
   logoutUser: () => void;
 }
+
+export interface ErrorMessage {
+  message: string;
+}

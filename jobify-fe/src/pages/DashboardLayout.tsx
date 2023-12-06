@@ -1,16 +1,19 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { SmallSidebar, BigSidebar, Nav } from "../components";
 import { createContext, useContext, useState } from "react";
-import { DashboardContextProps, UserLoader } from "../types";
+import { DashboardContextProps, ErrorMessage, UserLoader } from "../types";
 import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
-import { checkDefaultTheme, resolveThemeState } from "../utils";
+import { checkDefaultTheme, resolveThemeState, serviceFactory } from "../utils";
+import { toast } from "react-toastify";
+import { AxiosResponse } from "axios";
 
 const DashboardContext = createContext<DashboardContextProps>(
   DEFAULT_DASHBOARD_CONTEXT
 );
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
   const { user } = useLoaderData() as UserLoader;
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(checkDefaultTheme());
@@ -27,7 +30,12 @@ const DashboardLayout = () => {
   };
 
   const logoutUser = async () => {
-    console.log("logout");
+    // In this case it is LogoutMessage
+    const logout: AxiosResponse<ErrorMessage> = await serviceFactory().get(
+      "/auth/logout"
+    );
+    navigate("/login");
+    toast.success(logout.data.message);
   };
 
   return (
@@ -48,7 +56,7 @@ const DashboardLayout = () => {
           <div>
             <Nav />
             <div className="dashboard-page">
-              <Outlet />
+              <Outlet context={{ user }} />
             </div>
           </div>
         </main>

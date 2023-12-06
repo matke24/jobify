@@ -3,30 +3,31 @@ import { MdQueryStats } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { SmallSidebarLinks } from "../enum";
 
 const SMALL_SIDEBAR_LINKS = [
   {
-    text: "add job",
+    text: SmallSidebarLinks.ADD_JOB,
     path: ".",
     icon: <FaWpforms />,
   },
   {
-    text: "stats",
+    text: SmallSidebarLinks.STATS,
     path: "stats",
     icon: <IoBarChartSharp />,
   },
   {
-    text: "all jobs",
+    text: SmallSidebarLinks.ALL_JOBS,
     path: "all-jobs",
     icon: <MdQueryStats />,
   },
   {
-    text: "profile",
+    text: SmallSidebarLinks.PROFILE,
     path: "profile",
     icon: <ImProfile />,
   },
   {
-    text: "admin",
+    text: SmallSidebarLinks.ADMIN,
     path: "admin",
     icon: <MdAdminPanelSettings />,
   },
