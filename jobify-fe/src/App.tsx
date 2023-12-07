@@ -15,6 +15,7 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   addJobAction,
+  allJobsLoader,
   checkDefaultTheme,
   dashboardLoader,
   formActionLogin,
@@ -54,12 +55,13 @@ const router = createBrowserRouter([
             action: addJobAction,
           },
           {
-            path: "stats",
-            element: <Stats />,
-          },
-          {
             path: "all-jobs",
             element: <AllJobs />,
+            loader: allJobsLoader,
+          },
+          {
+            path: "stats",
+            element: <Stats />,
           },
           {
             path: "admin",
