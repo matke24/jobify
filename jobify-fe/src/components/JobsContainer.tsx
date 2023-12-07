@@ -19,7 +19,7 @@ const JobsContainer: React.FC = () => {
     <Wrapper>
       <div className="jobs">
         {jobs.map((job: JobData) => {
-          return <Job key={job._id} />;
+          return <Job key={job._id} {...job} />;
         })}
       </div>
     </Wrapper>

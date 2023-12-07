@@ -7,7 +7,6 @@ import JobsContainer from "../components/JobsContainer";
 const AllJobsContext = createContext({});
 const AllJobs = () => {
   const { data } = useLoaderData() as JobLoader;
-  console.log(data);
   return (
     <AllJobsContext.Provider value={{ data }}>
       <SearchContainer />

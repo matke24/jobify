@@ -38,7 +38,7 @@ export const addJobAction = async ({ request }: ActionFunctionArgs) => {
   try {
     await serviceFactory().post("/jobs", data);
     toast.success("Job created");
-    return null;
+    return redirect("/dashboard/all-jobs");
   } catch (err) {
     if (err instanceof AxiosError) {
       toast.error(err?.response?.data?.message);
