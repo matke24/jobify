@@ -329,3 +329,8 @@ button:disabled {
   background: #ffeeee;
   color: #d66a6a;
 }
+
+.hired {
+  background: #74dbad;
+  color: var(--green-dark);
+}

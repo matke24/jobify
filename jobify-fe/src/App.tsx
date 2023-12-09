@@ -10,6 +10,7 @@ import {
   AllJobs,
   Stats,
   Profile,
+  EditJob,
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             index: true,
             element: <AddJob />,
             action: addJobAction,
+          },
+          {
+            path: "edit-job/:id",
+            element: <EditJob />,
           },
           {
             path: "all-jobs",
