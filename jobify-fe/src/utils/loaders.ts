@@ -1,9 +1,9 @@
 import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { serviceFactory } from ".";
-import { AxiosError, AxiosResponse } from "axios";
-import { Job, UserData } from "../types";
+import { resolveError, serviceFactory } from ".";
+import { AxiosResponse } from "axios";
+import { JobData, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 
 export const dashboardLoader = async (): Promise<
@@ -24,18 +24,26 @@ export const dashboardLoader = async (): Promise<
   }
 };
 
-export const allJobsLoader = async (): Promise<
-  AxiosResponse<Job[]> | unknown
-> => {
+export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
   try {
-    const { data }: AxiosResponse = await serviceFactory().get<Job[]>("/jobs");
+    const { data } = await serviceFactory().get<JobData[]>("/jobs");
     if (!data) {
       throw new Error(FAILED_TO_LOAD_USER);
     }
-    return { data };
+    return data;
   } catch (error) {
-    if (error instanceof AxiosError)
-      toast.error(error?.response?.data?.message);
-    return error;
+    resolveError(error);
+  }
+};
+
+export const singleJobLoader = async ({
+  params,
+}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+any): Promise<JobData | undefined> => {
+  try {
+    const { data } = await serviceFactory().get<JobData>(`/jobs/${params.id}`);
+    return data;
+  } catch (err) {
+    resolveError(err, "/dashboard/all-jobs");
   }
 };

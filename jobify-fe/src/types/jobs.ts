@@ -11,8 +11,12 @@ export interface JobData {
   __v: number;
 }
 
-export interface JobLoader {
+export interface JobsLoader {
   data: JobData[];
+}
+
+export interface JobLoader {
+  job: JobData;
 }
 
 export interface JobsContext {

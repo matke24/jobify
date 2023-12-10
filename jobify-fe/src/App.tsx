@@ -21,6 +21,7 @@ import {
   dashboardLoader,
   formActionLogin,
   formActionRegister,
+  singleJobLoader,
 } from "./utils";
 
 checkDefaultTheme();
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
           {
             path: "edit-job/:id",
             element: <EditJob />,
+            loader: singleJobLoader,
           },
           {
             path: "all-jobs",
