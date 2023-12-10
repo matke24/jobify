@@ -19,6 +19,7 @@ import {
   allJobsLoader,
   checkDefaultTheme,
   dashboardLoader,
+  editJobAction,
   formActionLogin,
   formActionRegister,
   singleJobLoader,
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
             path: "edit-job/:id",
             element: <EditJob />,
             loader: singleJobLoader,
+            action: editJobAction,
           },
           {
             path: "all-jobs",

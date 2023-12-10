@@ -32,7 +32,7 @@ export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
     }
     return data;
   } catch (error) {
-    resolveError(error);
+    return resolveError(error);
   }
 };
 
@@ -44,6 +44,6 @@ any): Promise<JobData | undefined> => {
     const { data } = await serviceFactory().get<JobData>(`/jobs/${params.id}`);
     return data;
   } catch (err) {
-    resolveError(err, "/dashboard/all-jobs");
+    return resolveError(err, "/dashboard/all-jobs") as unknown;
   }
 };

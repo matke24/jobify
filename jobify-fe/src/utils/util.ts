@@ -20,7 +20,8 @@ export const isRegisterForm = (path: string) => {
 
 export const resolveError = (error: unknown, relocate?: string) => {
   if (error instanceof AxiosError) toast.error(error?.response?.data?.message);
-  return redirect(relocate as string) || error;
+  if (relocate) return redirect(relocate as string) as unknown;
+  return error;
 };
 
 export const resolveJobStatusDefaultValue = (value: string) => {

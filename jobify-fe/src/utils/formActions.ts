@@ -1,9 +1,8 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { isRegisterForm, serviceFactory } from "./";
+import { isRegisterForm, resolveError, serviceFactory } from "./";
 import { MIN_PASSWORD_LENGTH, PASSWORD_TOO_SHORT } from "../const";
-import { AxiosError } from "axios";
 
 export const createAuthForm =
   (path: string, relocate: string) =>
@@ -21,10 +20,7 @@ export const createAuthForm =
       toast.success(isRegisterForm(path));
       return redirect(relocate);
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        toast.error(error?.response?.data?.message);
-      }
-      return error;
+      return resolveError(error);
     }
   };
 
@@ -40,9 +36,22 @@ export const addJobAction = async ({ request }: ActionFunctionArgs) => {
     toast.success("Job created");
     return redirect("/dashboard/all-jobs");
   } catch (err) {
-    if (err instanceof AxiosError) {
-      toast.error(err?.response?.data?.message);
-    }
-    return err;
+    return resolveError(err);
+  }
+};
+
+export const editJobAction = async ({
+  request,
+  params,
+}: ActionFunctionArgs) => {
+  const formData: FormData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await serviceFactory().patch(`/jobs/${params.id}`, data);
+    toast.success("Job created");
+    return redirect("/dashboard/all-jobs");
+  } catch (err) {
+    return resolveError(err);
   }
 };
