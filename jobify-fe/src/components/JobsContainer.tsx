@@ -1,11 +1,10 @@
 import { useAllJobContext } from "../pages/AllJobs";
 import Wrapper from "../assets/wrappers/JobsContainer";
-import { JobData, JobsContext } from "../types";
+import { JobData, Jobs } from "../types";
 import Job from "./Job";
 
 const JobsContainer: React.FC = () => {
-  const { data } = useAllJobContext() as JobsContext;
-  const { jobs } = data;
+  const { jobs } = useAllJobContext() as Jobs;
 
   if (jobs.length === 0) {
     return (

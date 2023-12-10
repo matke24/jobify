@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
-import { JobsLoader } from "../types";
+import { Jobs } from "../types";
 import SearchContainer from "../components/SearchContainer";
 import JobsContainer from "../components/JobsContainer";
 
 const AllJobsContext = createContext({});
 const AllJobs = () => {
-  const { data } = useLoaderData() as JobsLoader;
+  const { jobs } = useLoaderData() as Jobs;
   return (
-    <AllJobsContext.Provider value={{ data }}>
+    <AllJobsContext.Provider value={{ jobs }}>
       <SearchContainer />
       <JobsContainer />
     </AllJobsContext.Provider>

@@ -3,12 +3,15 @@ import { Form, useLoaderData, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from "../components";
 import FormRowSelect from "../components/FormRowSelect";
-import { JobLoader } from "../types";
+import { Job } from "../types";
 import { JobStatus, JobType } from "../enum";
-import { resolveObjectKey } from "../utils";
+import {
+  resolveJobStatusDefaultValue,
+  resolveJobTypeDefaultValue,
+} from "../utils";
 
 const EditJob: React.FC = () => {
-  const { job } = useLoaderData() as JobLoader;
+  const { job } = useLoaderData() as Job;
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
@@ -36,22 +39,16 @@ const EditJob: React.FC = () => {
             id="jobLocation"
           />
           <FormRowSelect
-            // TODO: sfix defaultValue
             name={"jobStatus"}
             label="job status"
             list={Object.values(JobStatus)}
-            defaultValue={
-              resolveObjectKey(
-                Object.values(JobStatus),
-                job.jobStatus
-              ) as string
-            }
+            defaultValue={resolveJobStatusDefaultValue(job.jobStatus)}
           />
           <FormRowSelect
             name={"jobType"}
             label="job type"
             list={Object.values(JobType)}
-            defaultValue={JobType.FULL_TIME}
+            defaultValue={resolveJobTypeDefaultValue(job.jobType)}
           />
           <button
             type="submit"

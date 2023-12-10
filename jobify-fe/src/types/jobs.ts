@@ -11,16 +11,9 @@ export interface JobData {
   __v: number;
 }
 
-export interface JobsLoader {
-  data: JobData[];
+export interface Jobs {
+  jobs: JobData[];
 }
-
-export interface JobLoader {
+export interface Job {
   job: JobData;
-}
-
-export interface JobsContext {
-  data: {
-    jobs: JobData[];
-  };
 }
