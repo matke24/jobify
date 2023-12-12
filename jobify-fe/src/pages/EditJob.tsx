@@ -17,7 +17,7 @@ const EditJob: React.FC = () => {
   return (
     <Wrapper>
       <Form method="post" className="form">
-        <h4 className="form-title">add job</h4>
+        <h4 className="form-title">edit job</h4>
         <div className="form-center">
           <FormRow
             type="text"

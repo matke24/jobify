@@ -24,6 +24,7 @@ import {
   formActionRegister,
   singleJobLoader,
 } from "./utils";
+import { deleteJobAction } from "./pages/DeleteJob";
 
 checkDefaultTheme();
 
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+          },
+          {
+            path: "delete-job/:id",
+            action: deleteJobAction,
           },
         ],
       },
