@@ -70,7 +70,7 @@ export const DEFAULT_DASHBOARD_CONTEXT: DashboardContextProps = {
     lname: "",
     location: "",
     email: "",
-    password: "",
+    role: "",
   },
   showSideBar: false,
   isDarkTheme: false,

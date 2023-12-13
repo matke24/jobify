@@ -1,7 +1,15 @@
 import { FormRowProps } from "../types";
 
 const FormRow: React.FC<FormRowProps> = (props) => {
-  const { id, type, name, placeholder, required, label }: FormRowProps = props;
+  const {
+    id,
+    type,
+    name,
+    placeholder,
+    required,
+    label,
+    defaultValue,
+  }: FormRowProps = props;
   return (
     <div className="form-row">
       <label htmlFor="name" className="form-label">
@@ -14,6 +22,7 @@ const FormRow: React.FC<FormRowProps> = (props) => {
         className="form-input"
         placeholder={placeholder || ""}
         required={required || false}
+        defaultValue={defaultValue}
       />
     </div>
   );

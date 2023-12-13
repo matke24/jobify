@@ -12,14 +12,14 @@ const SMALL_SIDEBAR_LINKS = [
     icon: <FaWpforms />,
   },
   {
-    text: SmallSidebarLinks.STATS,
-    path: "stats",
-    icon: <IoBarChartSharp />,
-  },
-  {
     text: SmallSidebarLinks.ALL_JOBS,
     path: "all-jobs",
     icon: <MdQueryStats />,
+  },
+  {
+    text: SmallSidebarLinks.STATS,
+    path: "stats",
+    icon: <IoBarChartSharp />,
   },
   {
     text: SmallSidebarLinks.PROFILE,

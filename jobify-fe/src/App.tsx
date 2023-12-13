@@ -10,15 +10,23 @@ import {
   AllJobs,
   Stats,
   Profile,
+  EditJob,
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { checkDefaultTheme, createAuthForm, dashboardLoader } from "./utils";
+import {
+  addJobAction,
+  allJobsLoader,
+  checkDefaultTheme,
+  dashboardLoader,
+  editJobAction,
+  formActionLogin,
+  formActionRegister,
+  singleJobLoader,
+} from "./utils";
+import { deleteJobAction } from "./pages/DeleteJob";
 
 checkDefaultTheme();
-
-const formActionLogin = createAuthForm("/auth/login", "/dashboard");
-const formActionRegister = createAuthForm("/auth/register", "/login");
 
 const router = createBrowserRouter([
   {
@@ -48,14 +56,22 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AddJob />,
+            action: addJobAction,
           },
           {
-            path: "stats",
-            element: <Stats />,
+            path: "edit-job/:id",
+            element: <EditJob />,
+            loader: singleJobLoader,
+            action: editJobAction,
           },
           {
             path: "all-jobs",
             element: <AllJobs />,
+            loader: allJobsLoader,
+          },
+          {
+            path: "stats",
+            element: <Stats />,
           },
           {
             path: "admin",
@@ -64,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+          },
+          {
+            path: "delete-job/:id",
+            action: deleteJobAction,
           },
         ],
       },

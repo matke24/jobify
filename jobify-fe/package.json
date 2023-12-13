@@ -1,19 +1,22 @@
 {
   "name": "jobify-fe",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "version:patch": "npm version patch -git-tag-version false",
+    "version:minor": "npm version minor -git-tag-version false",
+    "version:major": "npm version major -git-tag-version false"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "^4.29.6",
     "axios": "^1.6.2",
-    "dayjs": "^1.11.7",
+    "dayjs": "^1.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
