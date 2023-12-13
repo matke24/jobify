@@ -18,7 +18,7 @@ export const isRegisterForm = (path: string) => {
   return path.includes("register") ? REGISTRATION_SUCCESSFUL : LOGIN_SUCCESS;
 };
 
-export const resolveError = (error: unknown, relocate?: string) => {
+export const resolveError = (error: unknown, relocate?: string): unknown => {
   if (error instanceof AxiosError) toast.error(error?.response?.data?.message);
   if (relocate) return redirect(relocate as string) as unknown;
   return error;

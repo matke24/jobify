@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { resolveError, serviceFactory } from ".";
 import { AxiosResponse } from "axios";
-import { JobData, UserData } from "../types";
+import { AdminResponse, JobData, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 
 export const dashboardLoader = async (): Promise<
@@ -39,11 +39,23 @@ export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
 export const singleJobLoader = async ({
   params,
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-any): Promise<JobData | undefined> => {
+any) => {
   try {
     const { data } = await serviceFactory().get<JobData>(`/jobs/${params.id}`);
     return data;
   } catch (err) {
-    return resolveError(err, "/dashboard/all-jobs") as unknown;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return resolveError(err, "/dashboard/all-jobs");
+  }
+};
+
+export const adminLoader = async () => {
+  try {
+    const { data } = await serviceFactory().get<AdminResponse>(
+      `users/admin/app-stats`
+    );
+    return data;
+  } catch (err) {
+    return resolveError(err, "/dashboard");
   }
 };
