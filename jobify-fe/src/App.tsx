@@ -16,6 +16,7 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   addJobAction,
+  adminLoader,
   allJobsLoader,
   checkDefaultTheme,
   dashboardLoader,
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
           {
             path: "admin",
             element: <Admin />,
+            loader: adminLoader,
           },
           {
             path: "profile",
