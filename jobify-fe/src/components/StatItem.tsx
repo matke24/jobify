@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import Wrapper from "../assets/wrappers/StatsContainer";
+import Wrapper from "../assets/wrappers/StatItem";
 
 interface Props {
   color: string;
@@ -10,7 +10,7 @@ interface Props {
 }
 const StatItem: React.FC<Props> = ({ bcg, color, count, icon, title }) => {
   return (
-    <Wrapper bcg={bcg} color={color}>
+    <Wrapper color={color} bcg={bcg}>
       <header>
         <span className="count">{count}</span>
         <span className="icon">{icon}</span>

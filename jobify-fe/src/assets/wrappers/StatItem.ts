@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const Wrapper = styled.article`
+interface Props {
+  color?: string;
+  bcg?: string;
+}
+const Wrapper = styled.article<Props>`
   padding: 2rem;
   background: var(--background-secondary-color);
   border-bottom: 5px solid ${(props) => props.color};
