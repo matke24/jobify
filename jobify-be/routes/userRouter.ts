@@ -9,6 +9,8 @@ import {
 } from "../controller/userController.js";
 import { Router } from "express";
 import { UserRole } from "../enum/user.js";
+import upload from "../middleware/multerMiddleware.js";
+import { MULTER_FORM } from "../const/user-const.js";
 const router = Router();
 
 router.get("/current-user", getCurrentUser);
@@ -17,6 +19,11 @@ router.get(
   authorizePermission(UserRole.ADMIN),
   getAppStats
 );
-router.patch("/update-user", validateUpdateUserInput, updateUser);
+router.patch(
+  "/update-user",
+  upload.single(MULTER_FORM),
+  validateUpdateUserInput,
+  updateUser
+);
 
 export default router;
