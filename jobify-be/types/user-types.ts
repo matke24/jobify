@@ -8,4 +8,6 @@ export interface UserBackendModel {
   password: string;
   location: string;
   role: UserRole;
+  avatar: string;
+  avatarPublicId: string;
 }
