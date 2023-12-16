@@ -24,6 +24,7 @@ import {
   formActionLogin,
   formActionRegister,
   singleJobLoader,
+  updateUserAction,
 } from "./utils";
 import { deleteJobAction } from "./pages/DeleteJob";
 
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+            action: updateUserAction,
           },
           {
             path: "delete-job/:id",

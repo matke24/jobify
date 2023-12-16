@@ -1,0 +1,1 @@
+export const UPLOAD_IMAGE_SIZE_LIMIT = 524_288;
