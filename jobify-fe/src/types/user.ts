@@ -6,6 +6,8 @@ export interface UserData {
   location: string;
   email: string;
   role: string;
+  avatar?: string;
+  avatarPublicId?: string;
 }
 
 export interface UserLoader {

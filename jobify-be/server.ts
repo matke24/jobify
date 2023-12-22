@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connect } from "./api/index.js";
+import { v2 as cloudinary } from "cloudinary";
 // Public
 import { dirname } from "path";
 import path from "path";
@@ -21,6 +22,12 @@ import { StatusCode } from "./enum/index.js";
 import { API_URL } from "./const/index.js";
 // Middlewares
 import { authenticateUser } from "./middleware/index.js";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 const app: Express = express();
 const port = process.env.PORT || 5100;
