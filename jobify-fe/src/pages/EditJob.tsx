@@ -1,19 +1,14 @@
-import { Form, useLoaderData, useNavigation } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from "../components";
 import FormRowSelect from "../components/FormRowSelect";
 import { Job } from "../types";
 import { JobStatus, JobType } from "../enum";
-import {
-  resolveJobStatusDefaultValue,
-  resolveJobTypeDefaultValue,
-} from "../utils";
+import SubmitButton from "../components/SubmitButton";
 
 const EditJob: React.FC = () => {
   const { job } = useLoaderData() as Job;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -42,21 +37,15 @@ const EditJob: React.FC = () => {
             name={"jobStatus"}
             label="job status"
             list={Object.values(JobStatus)}
-            defaultValue={resolveJobStatusDefaultValue(job.jobStatus)}
+            defaultValue={job.jobStatus as JobStatus}
           />
           <FormRowSelect
             name={"jobType"}
             label="job type"
             list={Object.values(JobType)}
-            defaultValue={resolveJobTypeDefaultValue(job.jobType)}
+            defaultValue={job.jobType as JobType}
           />
-          <button
-            type="submit"
-            className="btn btn-block form-btn "
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "submitting..." : "submit"}
-          </button>
+          <SubmitButton formButton />
         </div>
       </Form>
     </Wrapper>

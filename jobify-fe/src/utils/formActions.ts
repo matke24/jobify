@@ -2,7 +2,11 @@ import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { isRegisterForm, resolveError, serviceFactory } from "./";
-import { MIN_PASSWORD_LENGTH, PASSWORD_TOO_SHORT } from "../const";
+import {
+  MIN_PASSWORD_LENGTH,
+  PASSWORD_TOO_SHORT,
+  UPLOAD_IMAGE_SIZE_LIMIT,
+} from "../const";
 
 export const createAuthForm =
   (path: string, relocate: string) =>
@@ -54,4 +58,28 @@ export const editJobAction = async ({
   } catch (err) {
     return resolveError(err);
   }
+};
+
+export const updateUserAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const file = formData.get("avatar");
+
+  if (!(file instanceof File)) {
+    toast.error("An error occurred");
+    return null;
+  }
+
+  if (file && file?.size > UPLOAD_IMAGE_SIZE_LIMIT) {
+    toast.error("File size too big");
+    return null;
+  }
+
+  try {
+    await serviceFactory().patch("/users/update-user", formData);
+    toast.success("User updated successfully");
+  } catch (e) {
+    return resolveError(e);
+  }
+
+  return null;
 };

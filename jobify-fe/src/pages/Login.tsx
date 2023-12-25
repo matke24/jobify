@@ -1,13 +1,10 @@
-import { Form, Link, useNavigation } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { FORM_ROW_LOGIN } from "../const";
-import { UseNavigationEnum } from "../enum";
+import SubmitButton from "../components/SubmitButton";
 
 const Login = () => {
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === UseNavigationEnum.SUBMITTING;
-
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -16,9 +13,7 @@ const Login = () => {
         {FORM_ROW_LOGIN.map((row) => {
           return <FormRow {...row} key={row.id} />;
         })}
-        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Login"}
-        </button>
+        <SubmitButton />
         <button type="button" className="btn btn-block">
           Explore The App
         </button>
