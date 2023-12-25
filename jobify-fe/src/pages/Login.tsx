@@ -1,10 +1,29 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { FORM_ROW_LOGIN } from "../const";
 import SubmitButton from "../components/SubmitButton";
+import { serviceFactory } from "../utils";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const loginDemo = async () => {
+    const data = {
+      email: "test@test.com",
+      password: "secret123",
+    };
+
+    try {
+      await serviceFactory().post("/auth/login", data);
+      toast.success("Test application");
+      navigate("/dashboard");
+    } catch (e) {
+      toast.error(e as string);
+    }
+  };
+
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -14,7 +33,7 @@ const Login = () => {
           return <FormRow {...row} key={row.id} />;
         })}
         <SubmitButton />
-        <button type="button" className="btn btn-block">
+        <button type="button" className="btn btn-block" onClick={loginDemo}>
           Explore The App
         </button>
         <p>

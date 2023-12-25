@@ -1,6 +1,7 @@
 import {
   validateUpdateUserInput,
   authorizePermission,
+  checkIsTestUser,
 } from "../middleware/index.js";
 import {
   getAppStats,
@@ -21,6 +22,7 @@ router.get(
 );
 router.patch(
   "/update-user",
+  checkIsTestUser,
   upload.single(MULTER_FORM),
   validateUpdateUserInput,
   updateUser

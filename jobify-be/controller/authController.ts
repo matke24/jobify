@@ -5,7 +5,7 @@ import { comparePasswords, hashPassword } from "../utils/passwordUtils.js";
 import { UnauthenticatedError } from "../error/customErrors.js";
 import { UserBackendModel } from "../types/user-types.js";
 import { createJWT } from "../utils/token.js";
-import { ONE_DAY_IN_MS, COOKIE_NAME } from "../const/index.js";
+import { ONE_DAY_IN_MS, COOKIE_NAME, TEST_USER } from "../const/index.js";
 
 export const registerController = async (req: Request, res: Response) => {
   const isFirstUser = (await User.countDocuments()) === 0;
@@ -31,6 +31,7 @@ export const loginController = async (req: Request, res: Response) => {
   const token = createJWT({
     userId: user!._id,
     role: user!.role,
+    isTestUser: user!._id === TEST_USER,
   });
 
   res.cookie(COOKIE_NAME, token, {
