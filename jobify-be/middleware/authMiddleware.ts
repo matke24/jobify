@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthenticatedError, UnauthorizedError } from "../error/index.js";
+import {
+  BadRequestError,
+  UnauthenticatedError,
+  UnauthorizedError,
+} from "../error/index.js";
 import { verifyJWT } from "../utils/token.js";
 import { JWToken } from "../types/index.js";
+import { TEST_USER } from "../const/user-const.js";
 
 export const authenticateUser = (
   req: Request,
@@ -15,7 +20,8 @@ export const authenticateUser = (
 
   try {
     const { userId, role }: JWToken = verifyJWT(user_token) as JWToken;
-    req.user = { userId, role };
+    const isTestUser = userId === TEST_USER;
+    req.user = { userId, role, isTestUser };
     next();
   } catch (error) {
     throw new UnauthenticatedError("Authentication invalid");
@@ -31,4 +37,15 @@ export const authorizePermission = (...roles: string[]) => {
     }
     next();
   };
+};
+
+export const checkIsTestUser = (
+  req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  if (req.user && req.user.isTestUser) {
+    throw new BadRequestError("Test user. Read ONLY!");
+  }
+  next();
 };
