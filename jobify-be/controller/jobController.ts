@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
-import { SUCCESSFULLY_UPDATED } from "../const/index.js";
+import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
   const isUserAdmin = req.user?.role === UserRole.ADMIN;
@@ -13,7 +13,9 @@ export const getAllJobs = async (req: Request, res: Response) => {
     : {
         author: req.user?.userId,
       };
-  const jobs: JobBackendModel[] | null = await Job.find(query);
+  const jobs: JobBackendModel[] | null = (await Job.find(query)).filter(
+    (job) => job.author.toString() !== TEST_USER
+  );
   res.status(StatusCode.OK).json({ jobs });
 };
 
