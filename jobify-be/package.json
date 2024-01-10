@@ -5,8 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watchAll",
     "build": "npx tsc",
     "start": "node --experimental-specifier-resolution=node dist/server.js",
     "dev": "nodemon --trace-warnings -I --exec node --experimental-specifier-resolution=node --loader ts-node/esm ./server.ts",

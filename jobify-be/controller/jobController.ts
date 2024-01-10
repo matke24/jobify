@@ -4,12 +4,12 @@ import { Request, Response } from "express";
 import { JobBackendModel } from "../types";
 import Job from "../models/JobModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
-import { SUCCESSFULLY_UPDATED } from "../const/index.js";
+import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const isUserAdmin = req.user?.role === UserRole.ADMIN;
+  const isUserAdmin = req.user && req.user.role === UserRole.ADMIN;
   const query = isUserAdmin
-    ? {}
+    ? { author: { $ne: TEST_USER } }
     : {
         author: req.user?.userId,
       };
