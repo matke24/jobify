@@ -11,5 +11,6 @@ export interface JobBackendModel {
   createdAt: string;
   updatedAt: string;
   author: Types.ObjectId;
+  authorName?: string;
   _v: number;
 }

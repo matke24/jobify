@@ -1,8 +1,9 @@
 import "express-async-errors";
 import { Request, Response } from "express";
 
-import { JobBackendModel } from "../types";
+import { JobBackendModel, UserBackendModel } from "../types";
 import Job from "../models/JobModel.js";
+import User from "../models/UserModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
 import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
 
@@ -14,7 +15,18 @@ export const getAllJobs = async (req: Request, res: Response) => {
         author: req.user?.userId,
       };
   const jobs: JobBackendModel[] | null = await Job.find(query);
-  res.status(StatusCode.OK).json({ jobs });
+  const users: UserBackendModel[] | null = await User.find({});
+  const jobsWithName: JobBackendModel[] | null = jobs.map((job) => {
+    const author = users.filter(
+      (user) => user._id.toString() === job.author.toString()
+    );
+    console.log(author[0].fname);
+    return {
+      ...job,
+    };
+  });
+
+  res.status(StatusCode.OK).json({ jobs: jobsWithName });
 };
 
 export const getSingleJob = async (req: Request, res: Response) => {
