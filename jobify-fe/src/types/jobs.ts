@@ -1,9 +1,11 @@
+import { JobStatus, JobType } from "../enum";
+
 export interface JobData {
   _id: string;
   company: string;
   position: string;
-  jobStatus: "hired";
-  jobType: "full-time";
+  jobStatus: JobStatus;
+  jobType: JobType;
   jobLocation: string;
   author: string;
   createdAt: Date;
