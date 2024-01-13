@@ -6,6 +6,7 @@ import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
 import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
+import { setAuthorNames } from "../utils/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
   const isUserAdmin = req.user && req.user.role === UserRole.ADMIN;
@@ -16,15 +17,7 @@ export const getAllJobs = async (req: Request, res: Response) => {
       };
   const jobs: JobBackendModel[] | null = await Job.find(query);
   const users: UserBackendModel[] | null = await User.find({});
-  const jobsWithName: JobBackendModel[] | null = jobs.map((job) => {
-    const author = users.filter(
-      (user) => user._id.toString() === job.author.toString()
-    );
-    console.log(author[0].fname);
-    return {
-      ...job,
-    };
-  });
+  const jobsWithName: JobBackendModel[] | null = setAuthorNames(jobs, users);
 
   res.status(StatusCode.OK).json({ jobs: jobsWithName });
 };

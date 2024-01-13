@@ -17,6 +17,7 @@ const Job: React.FC<JobData> = ({
   createdAt,
   jobStatus,
   jobType,
+  authorName,
 }) => {
   const date = day(createdAt).format("MMM Do, YYYY");
   return (
@@ -30,22 +31,39 @@ const Job: React.FC<JobData> = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
-          <JobInfo icon={<FaCalendarAlt />} text={date} />
-          <JobInfo icon={<FaBriefcase />} text={jobType} />
-          <div className={`status ${jobStatus}`}>{jobStatus}</div>
-          <footer className="actions">
-            <Link className="btn edit-btn" to={`../edit-job/${_id}`}>
-              Edit
-            </Link>
-            <Form method="post" action={`../delete-job/${_id}`}>
-              <button type="submit" className="btn delete-btn">
-                Delete
-              </button>
-            </Form>
-          </footer>
+          <JobInfo
+            className="content-child"
+            icon={<FaLocationArrow />}
+            text={jobLocation}
+          />
+          <JobInfo
+            className="content-child"
+            icon={<FaCalendarAlt />}
+            text={date}
+          />
+          <JobInfo
+            className="content-child"
+            icon={<FaBriefcase />}
+            text={jobType}
+          />
+          <div className={`status ${jobStatus} content-child`}>{jobStatus}</div>
         </div>
       </div>
+      <footer className="actions content footer">
+        <div className="footer-btn-container">
+          <Link className="btn edit-btn" to={`../edit-job/${_id}`}>
+            Edit
+          </Link>
+          <Form method="post" action={`../delete-job/${_id}`}>
+            <button type="submit" className="btn delete-btn">
+              Delete
+            </button>
+          </Form>
+        </div>
+        <div>
+          <span className="author">~{authorName}</span>
+        </div>
+      </footer>
     </Wrapper>
   );
 };

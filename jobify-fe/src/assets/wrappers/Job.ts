@@ -38,7 +38,7 @@ const Wrapper = styled.article`
     }
   }
   .content {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem 0;
   }
   .content-center {
     display: grid;
@@ -50,6 +50,15 @@ const Wrapper = styled.article`
     @media (min-width: 576px) {
       grid-template-columns: 1fr 1fr;
     }
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+  }
+  .footer-btn-container {
+    display: flex;
+    flex-wrap: nowrap;
   }
   .status {
     border-radius: var(--border-radius);

@@ -8,6 +8,7 @@ export interface JobData {
   jobType: JobType;
   jobLocation: string;
   author: string;
+  authorName?: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
