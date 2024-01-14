@@ -6,6 +6,7 @@ import day from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { JobData } from "../types";
 import { Form, Link } from "react-router-dom";
+import { JustifyContent } from "../assets/wrappers/enum";
 
 day.extend(advancedFormat);
 
@@ -31,21 +32,13 @@ const Job: React.FC<JobData> = ({
       </header>
       <div className="content">
         <div className="content-center">
+          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
           <JobInfo
-            className="content-child"
-            icon={<FaLocationArrow />}
-            text={jobLocation}
-          />
-          <JobInfo
-            className="content-child"
+            justify={JustifyContent.FLEX_END}
             icon={<FaCalendarAlt />}
             text={date}
           />
-          <JobInfo
-            className="content-child"
-            icon={<FaBriefcase />}
-            text={jobType}
-          />
+          <JobInfo icon={<FaBriefcase />} text={jobType} />
           <div className={`status ${jobStatus} content-child`}>{jobStatus}</div>
         </div>
       </div>

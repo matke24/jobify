@@ -65,7 +65,6 @@ const Wrapper = styled.article`
     text-transform: capitalize;
     letter-spacing: var(--letter-spacing);
     text-align: center;
-    width: 150px;
     height: 30px;
     display: grid;
     align-items: center;

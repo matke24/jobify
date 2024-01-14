@@ -1,8 +1,13 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { JustifyContent } from "./enum";
 
-const Wrapper = styled.div`
+interface Props {
+  justify?: JustifyContent;
+}
+const Wrapper = styled.div<Props>`
   display: flex;
   align-items: center;
+  justify-content: ${(p) => p.justify};
   .job-icon {
     font-size: 1rem;
     margin-right: 1rem;
