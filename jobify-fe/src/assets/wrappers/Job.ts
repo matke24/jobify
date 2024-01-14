@@ -38,7 +38,7 @@ const Wrapper = styled.article`
     }
   }
   .content {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem 0;
   }
   .content-center {
     display: grid;
@@ -51,12 +51,20 @@ const Wrapper = styled.article`
       grid-template-columns: 1fr 1fr;
     }
   }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+  }
+  .footer-btn-container {
+    display: flex;
+    flex-wrap: nowrap;
+  }
   .status {
     border-radius: var(--border-radius);
     text-transform: capitalize;
     letter-spacing: var(--letter-spacing);
     text-align: center;
-    width: 150px;
     height: 30px;
     display: grid;
     align-items: center;
