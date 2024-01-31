@@ -1,11 +1,21 @@
 import "express-async-errors";
 import { Request, Response } from "express";
 
-import { JWToken, JobBackendModel, UserBackendModel } from "../types";
+import {
+  JWToken,
+  JobBackendModel,
+  JobStats,
+  JobStatsDbResponse,
+  UserBackendModel,
+} from "../types";
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
-import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
+import {
+  DEFAULT_STATS,
+  SUCCESSFULLY_UPDATED,
+  TEST_USER,
+} from "../const/index.js";
 import { isUserAdmin, setAuthorNames } from "../utils/index.js";
 import mongoose from "mongoose";
 
@@ -67,17 +77,23 @@ export const jobStats = async (req: Request, res: Response) => {
         author: req.user && new mongoose.Types.ObjectId(req.user.userId),
       };
 
-  let stats = await Job.aggregate([
+  const dbStats: JobStatsDbResponse[] = await Job.aggregate([
     {
       $match: match,
     },
     { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
   ]);
 
-  stats = stats.reduce((acc, curr) => {
-    const { _id: title, count } = curr;
-    acc[title] = count;
-    return acc;
-  }, {});
+  const stats: JobStats = dbStats.reduce(
+    (acc: JobStats, job: JobStatsDbResponse) => {
+      const { _id: title, count } = job;
+      acc.totalJobs += count;
+      acc[title] = count;
+      return acc;
+    },
+    {
+      ...DEFAULT_STATS,
+    }
+  );
   return res.status(StatusCode.OK).json({ stats });
 };

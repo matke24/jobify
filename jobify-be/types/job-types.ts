@@ -14,3 +14,16 @@ export interface JobBackendModel {
   authorName?: string;
   _v: number;
 }
+
+export interface JobStatsDbResponse {
+  _id: JobStatus;
+  count: number;
+}
+
+export interface JobStats {
+  pending: number;
+  declined: number;
+  hired: number;
+  interview: number;
+  totalJobs: number;
+}
