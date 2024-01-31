@@ -8,9 +8,10 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from "../error/index.js";
-import { JobBackendModel } from "../types/index.js";
+import { JWToken, JobBackendModel } from "../types/index.js";
 import { withValidationError } from "./validationHandlerMiddleware.js";
 import Job from "../models/JobModel.js";
+import { isUserAdmin } from "../utils/index.js";
 
 export const validateJobInput: RequestHandler[] = withValidationError([
   body("company").notEmpty().withMessage("Company is required"),
@@ -36,10 +37,9 @@ export const validateIdParam: RequestHandler[] = withValidationError([
       throw new NotFoundError(`Cannot find a job with id: ${jobID}`);
     }
 
-    const isUserAdmin = req.user.role === UserRole.ADMIN;
     const isUserAuthor = req.user.userId === job.author.toString();
 
-    if (!isUserAdmin && !isUserAuthor) {
+    if (!isUserAdmin(req.user as JWToken) && !isUserAuthor) {
       throw new UnauthorizedError("Not authorized to access this route");
     }
   }),

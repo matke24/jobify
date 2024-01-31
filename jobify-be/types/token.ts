@@ -6,5 +6,3 @@ export interface JWToken {
   role: UserRole;
   isTestUser: boolean;
 }
-
-export interface DecodedJWToken extends JWToken, JwtPayload {}

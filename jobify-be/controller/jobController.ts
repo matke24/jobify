@@ -1,23 +1,23 @@
 import "express-async-errors";
 import { Request, Response } from "express";
 
-import { JobBackendModel, UserBackendModel } from "../types";
+import { JWToken, JobBackendModel, UserBackendModel } from "../types";
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
 import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
-import { setAuthorNames } from "../utils/index.js";
+import { isUserAdmin, setAuthorNames } from "../utils/index.js";
+import mongoose from "mongoose";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const isUserAdmin = req.user && req.user.role === UserRole.ADMIN;
-  const query = isUserAdmin
+  const query = isUserAdmin(req.user as JWToken)
     ? { author: { $ne: TEST_USER } }
     : {
         author: req.user?.userId,
       };
-  const jobs: JobBackendModel[] | null = await Job.find(query);
-  const users: UserBackendModel[] | null = await User.find({});
-  const jobsWithName: JobBackendModel[] | null = setAuthorNames(jobs, users);
+  const jobs: JobBackendModel[] = await Job.find(query);
+  const users: UserBackendModel[] = await User.find({});
+  const jobsWithName: JobBackendModel[] = setAuthorNames(jobs, users);
 
   res.status(StatusCode.OK).json({ jobs: jobsWithName });
 };
@@ -54,4 +54,30 @@ export const deleteJob = async (req: Request, res: Response) => {
   res
     .status(StatusCode.OK)
     .json({ message: "Successfully deleted", job: removedJob });
+};
+
+export const jobStats = async (req: Request, res: Response) => {
+  const match = isUserAdmin(req.user as JWToken)
+    ? {
+        author: {
+          $ne: new mongoose.Types.ObjectId(TEST_USER),
+        },
+      }
+    : {
+        author: req.user && new mongoose.Types.ObjectId(req.user.userId),
+      };
+
+  let stats = await Job.aggregate([
+    {
+      $match: match,
+    },
+    { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
+  ]);
+
+  stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
+    acc[title] = count;
+    return acc;
+  }, {});
+  return res.status(StatusCode.OK).json({ stats });
 };
