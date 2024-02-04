@@ -1,4 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
 import { UserRole } from "../enum/index.js";
 
 export interface JWToken {

@@ -1,8 +1,8 @@
-import { RequestHandler, Request } from "express";
+import { RequestHandler } from "express";
 import { body, param } from "express-validator";
 import mongoose from "mongoose";
 
-import { JobStatus, JobType, UserRole } from "../enum/index.js";
+import { JobStatus, JobType } from "../enum/index.js";
 import {
   BadRequestError,
   NotFoundError,
