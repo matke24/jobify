@@ -52,7 +52,10 @@ export const getJobMonthlyStats = async (
       _id: { month, year },
       count,
     } = stat;
-    const date = dayjs().month(month).year(year).format("MMM YY");
+    const date = dayjs()
+      .month(month - 1)
+      .year(year)
+      .format("MMM YY");
     return {
       date,
       count,
