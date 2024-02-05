@@ -47,20 +47,22 @@ export const getJobMonthlyStats = async (
       { $limit: 6 },
     ]);
 
-  const monthlyStats: JobMonthlyStats[] = monthlyStatsDbResponse.map((stat) => {
-    const {
-      _id: { month, year },
-      count,
-    } = stat;
-    const date = dayjs()
-      .month(month - 1)
-      .year(year)
-      .format("MMM YY");
-    return {
-      date,
-      count,
-    };
-  });
+  const monthlyStats: JobMonthlyStats[] = monthlyStatsDbResponse
+    .map((stat) => {
+      const {
+        _id: { month, year },
+        count,
+      } = stat;
+      const date = dayjs()
+        .month(month - 1)
+        .year(year)
+        .format("MMM YY");
+      return {
+        date,
+        count,
+      };
+    })
+    .reverse();
 
   return monthlyStats;
 };
