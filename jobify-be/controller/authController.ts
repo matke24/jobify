@@ -3,7 +3,7 @@ import User from "../models/UserModel.js";
 import { StatusCode, UserRole } from "../enum/index.js";
 import { comparePasswords, hashPassword } from "../utils/passwordUtils.js";
 import { UnauthenticatedError } from "../error/customErrors.js";
-import { UserBackendModel } from "../types/user-types.js";
+import { UserBackendModel } from "../types/user.types.js";
 import { createJWT } from "../utils/token.js";
 import { ONE_DAY_IN_MS, COOKIE_NAME, TEST_USER } from "../const/index.js";
 
