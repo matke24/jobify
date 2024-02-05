@@ -4,9 +4,10 @@ import { SmallSidebar, BigSidebar, Nav } from "../components";
 import { createContext, useContext, useState } from "react";
 import { DashboardContextProps, ErrorMessage, UserLoader } from "../types";
 import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
-import { checkDefaultTheme, resolveThemeState, serviceFactory } from "../utils";
+import { checkDefaultTheme, resolveThemeState } from "../utils";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
+import { serviceFactory } from "../service";
 
 const DashboardContext = createContext<DashboardContextProps>(
   DEFAULT_DASHBOARD_CONTEXT

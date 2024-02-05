@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-import { serviceFactory, resolveError } from "../utils";
+import { resolveError } from "../utils";
+import { serviceFactory } from "../service";
 
 export const deleteJobAction = async ({ params }: ActionFunctionArgs) => {
   try {

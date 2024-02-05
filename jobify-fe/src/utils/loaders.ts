@@ -1,10 +1,11 @@
 import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { resolveError, serviceFactory } from ".";
+import { resolveError } from ".";
 import { AxiosResponse } from "axios";
 import { AdminResponse, JobData, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
+import { serviceFactory } from "../service";
 
 export const dashboardLoader = async (): Promise<
   AxiosResponse<UserData> | unknown

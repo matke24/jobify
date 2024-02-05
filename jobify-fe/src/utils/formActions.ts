@@ -1,12 +1,13 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { isRegisterForm, resolveError, serviceFactory } from "./";
+import { isRegisterForm, resolveError } from "./";
 import {
   MIN_PASSWORD_LENGTH,
   PASSWORD_TOO_SHORT,
   UPLOAD_IMAGE_SIZE_LIMIT,
 } from "../const";
+import { serviceFactory } from "../service";
 
 export const createAuthForm =
   (path: string, relocate: string) =>

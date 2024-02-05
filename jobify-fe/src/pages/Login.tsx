@@ -3,8 +3,8 @@ import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { FORM_ROW_LOGIN } from "../const";
 import SubmitButton from "../components/SubmitButton";
-import { serviceFactory } from "../utils";
 import { toast } from "react-toastify";
+import { serviceFactory } from "../service";
 
 const Login = () => {
   const navigate = useNavigate();
