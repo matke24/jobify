@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { isRegisterForm, resolveError } from "../utils";
 import { MIN_PASSWORD_LENGTH, PASSWORD_TOO_SHORT } from "../const";
-import { serviceFactory } from "../service";
+import { createRestClient } from "../service";
 
 export const createAuthForm =
   (path: string, relocate: string) =>
@@ -17,7 +17,7 @@ export const createAuthForm =
     }
 
     try {
-      await serviceFactory().post(path, data);
+      await createRestClient().post(path, data);
       toast.success(isRegisterForm(path));
       return redirect(relocate);
     } catch (error: unknown) {

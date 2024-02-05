@@ -7,7 +7,7 @@ import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
 import { checkDefaultTheme, resolveThemeState } from "../utils";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
-import { serviceFactory } from "../service";
+import { createRestClient } from "../service";
 
 const DashboardContext = createContext<DashboardContextProps>(
   DEFAULT_DASHBOARD_CONTEXT
@@ -32,7 +32,7 @@ const DashboardLayout = () => {
 
   const logoutUser = async () => {
     // In this case it is LogoutMessage
-    const logout: AxiosResponse<ErrorMessage> = await serviceFactory().get(
+    const logout: AxiosResponse<ErrorMessage> = await createRestClient().get(
       "/auth/logout"
     );
     navigate("/login");

@@ -2,8 +2,9 @@ import { ActionFunctionArgs } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createAuthForm } from ".";
 import { UPLOAD_IMAGE_SIZE_LIMIT } from "../const";
-import { serviceFactory } from "../service";
+
 import { resolveError } from "../utils";
+import { createRestClient } from "../service";
 
 export const formActionLogin = createAuthForm("/auth/login", "/dashboard");
 export const formActionRegister = createAuthForm("/auth/register", "/login");
@@ -23,7 +24,7 @@ export const updateUserAction = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    await serviceFactory().patch("/users/update-user", formData);
+    await createRestClient().patch("/users/update-user", formData);
     toast.success("User updated successfully");
   } catch (e) {
     return resolveError(e);

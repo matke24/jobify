@@ -1,14 +1,18 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-import { serviceFactory } from "../service";
 import { resolveError } from "../utils";
+import { jobService as JobService } from "../service/jobService";
+import { FormEntryData } from "../types";
+import { createRestClient } from "../service";
+
+const jobService = JobService();
 
 export const addJobAction = async ({ request }: ActionFunctionArgs) => {
   const formData: FormData = await request.formData();
-  const data = Object.fromEntries(formData);
+  const data: FormEntryData = Object.fromEntries(formData);
 
   try {
-    await serviceFactory().post("/jobs", data);
+    await jobService.createJob(data);
     toast.success("Job created");
     return redirect("/dashboard/all-jobs");
   } catch (err) {
@@ -21,10 +25,10 @@ export const editJobAction = async ({
   params,
 }: ActionFunctionArgs) => {
   const formData: FormData = await request.formData();
-  const data = Object.fromEntries(formData);
+  const data: FormEntryData = Object.fromEntries(formData);
 
   try {
-    await serviceFactory().patch(`/jobs/${params.id}`, data);
+    await createRestClient().patch(`/jobs/${params.id}`, data);
     toast.success("Job created");
     return redirect("/dashboard/all-jobs");
   } catch (err) {

@@ -1,5 +1,9 @@
 import { UserData } from ".";
 
+export type FormEntryData = {
+  [k: string]: FormDataEntryValue;
+};
+
 export interface DashboardContextProps {
   user: UserData;
   showSideBar: boolean;
