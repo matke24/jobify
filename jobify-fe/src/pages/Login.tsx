@@ -3,8 +3,8 @@ import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 import { FORM_ROW_LOGIN } from "../const";
 import SubmitButton from "../components/SubmitButton";
-import { serviceFactory } from "../utils";
 import { toast } from "react-toastify";
+import { createRestClient } from "../service";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Login = () => {
     };
 
     try {
-      await serviceFactory().post("/auth/login", data);
+      await createRestClient().post("/auth/login", data);
       toast.success("Test application");
       navigate("/dashboard");
     } catch (e) {

@@ -1,4 +1,3 @@
-import { Request } from "express";
 import { body } from "express-validator";
 import User from "../models/UserModel.js";
 import { withValidationError } from "./index.js";

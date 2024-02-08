@@ -20,3 +20,23 @@ export interface Jobs {
 export interface Job {
   job: JobData;
 }
+
+// TODO: fix everything above this line
+
+export interface JobStats {
+  pending: number;
+  declined: number;
+  hired: number;
+  interview: number;
+  totalJobs: number;
+}
+
+export interface MonthlyStats {
+  date: string;
+  count: number;
+}
+
+export interface JobStatistics {
+  stats: JobStats;
+  monthlyStats: MonthlyStats[];
+}

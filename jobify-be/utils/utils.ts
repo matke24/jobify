@@ -1,4 +1,5 @@
-import { JobBackendModel, UserBackendModel } from "../types/index.js";
+import { UserRole } from "../enum/index.js";
+import { JWToken, JobBackendModel, UserBackendModel } from "../types/index.js";
 
 export const setAuthorNames = (
   jobs: JobBackendModel[],
@@ -34,4 +35,8 @@ export const setAuthorNames = (
       _v,
     };
   });
+};
+
+export const isUserAdmin = (userToken: JWToken) => {
+  return userToken.role === UserRole.ADMIN;
 };

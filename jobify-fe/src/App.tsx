@@ -16,17 +16,20 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   addJobAction,
-  adminLoader,
-  allJobsLoader,
-  checkDefaultTheme,
-  dashboardLoader,
   editJobAction,
   formActionLogin,
   formActionRegister,
-  singleJobLoader,
   updateUserAction,
+} from "./actions";
+import { deleteJobAction } from "./pages";
+import {
+  checkDefaultTheme,
+  dashboardLoader,
+  singleJobLoader,
+  allJobsLoader,
+  adminLoader,
+  statsLoader,
 } from "./utils";
-import { deleteJobAction } from "./pages/DeleteJob";
 
 checkDefaultTheme();
 
@@ -74,6 +77,7 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
+            loader: statsLoader,
           },
           {
             path: "admin",

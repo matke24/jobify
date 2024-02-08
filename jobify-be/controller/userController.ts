@@ -1,10 +1,12 @@
 import { v2 as cloudinary } from "cloudinary";
 import { promises as fs } from "fs";
 
-import { Request, Response } from "express";
-import { StatusCode } from "../enum/index.js";
+import { Request, Response, query } from "express";
+import { StatusCode, UserRole } from "../enum/index.js";
 import User from "../models/UserModel.js";
 import Job from "../models/JobModel.js";
+import { TEST_USER } from "../const/user-const.js";
+import mongoose from "mongoose";
 
 export const getCurrentUser = async (req: Request, res: Response) => {
   const user = await User.findById(req.user?.userId);
@@ -13,8 +15,12 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 };
 
 export const getAppStats = async (req: Request, res: Response) => {
-  const userCount = await User.countDocuments();
-  const jobCount = await Job.countDocuments();
+  const userCount = await User.countDocuments({
+    _id: { $ne: new mongoose.Types.ObjectId(TEST_USER) },
+  });
+  const jobCount = await Job.countDocuments({
+    author: { $ne: new mongoose.Types.ObjectId(TEST_USER) },
+  });
   res.status(StatusCode.OK).json({ users: userCount, jobs: jobCount });
 };
 

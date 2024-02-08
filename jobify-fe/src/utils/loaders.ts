@@ -1,16 +1,18 @@
 import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { resolveError, serviceFactory } from ".";
+import { resolveError } from ".";
 import { AxiosResponse } from "axios";
-import { AdminResponse, JobData, UserData } from "../types";
+import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
+import { createRestClient } from "../service";
+import { jobService as JobService } from "../service";
 
 export const dashboardLoader = async (): Promise<
   AxiosResponse<UserData> | unknown
 > => {
   try {
-    const { data }: AxiosResponse = await serviceFactory().get<UserData>(
+    const { data }: AxiosResponse = await createRestClient().get<UserData>(
       "/users/current-user"
     );
 
@@ -26,7 +28,7 @@ export const dashboardLoader = async (): Promise<
 
 export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
   try {
-    const { data } = await serviceFactory().get<JobData[]>("/jobs");
+    const { data } = await createRestClient().get<JobData[]>("/jobs");
     if (!data) {
       throw new Error(FAILED_TO_LOAD_USER);
     }
@@ -41,7 +43,9 @@ export const singleJobLoader = async ({
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any) => {
   try {
-    const { data } = await serviceFactory().get<JobData>(`/jobs/${params.id}`);
+    const { data } = await createRestClient().get<JobData>(
+      `/jobs/${params.id}`
+    );
     return data;
   } catch (err) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,9 +55,19 @@ any) => {
 
 export const adminLoader = async () => {
   try {
-    const { data } = await serviceFactory().get<AdminResponse>(
+    const { data } = await createRestClient().get<AdminResponse>(
       `users/admin/app-stats`
     );
+    return data;
+  } catch (err) {
+    return resolveError(err, "/dashboard");
+  }
+};
+
+export const statsLoader = async () => {
+  const jobService = JobService();
+  try {
+    const data: JobStatistics = await jobService.getJobStats();
     return data;
   } catch (err) {
     return resolveError(err, "/dashboard");

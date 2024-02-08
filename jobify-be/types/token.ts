@@ -1,4 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
 import { UserRole } from "../enum/index.js";
 
 export interface JWToken {
@@ -6,5 +5,3 @@ export interface JWToken {
   role: UserRole;
   isTestUser: boolean;
 }
-
-export interface DecodedJWToken extends JWToken, JwtPayload {}
