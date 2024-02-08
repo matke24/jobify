@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 
 import { resolveError } from ".";
 import { AxiosResponse } from "axios";
-import { AdminResponse, JobData, UserData } from "../types";
+import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 import { createRestClient } from "../service";
+import { jobService as JobService } from "../service";
 
 export const dashboardLoader = async (): Promise<
   AxiosResponse<UserData> | unknown
@@ -57,6 +58,16 @@ export const adminLoader = async () => {
     const { data } = await createRestClient().get<AdminResponse>(
       `users/admin/app-stats`
     );
+    return data;
+  } catch (err) {
+    return resolveError(err, "/dashboard");
+  }
+};
+
+export const statsLoader = async () => {
+  const jobService = JobService();
+  try {
+    const data: JobStatistics = await jobService.getJobStats();
     return data;
   } catch (err) {
     return resolveError(err, "/dashboard");

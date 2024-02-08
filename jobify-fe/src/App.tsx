@@ -28,6 +28,7 @@ import {
   singleJobLoader,
   allJobsLoader,
   adminLoader,
+  statsLoader,
 } from "./utils";
 
 checkDefaultTheme();
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
+            loader: statsLoader,
           },
           {
             path: "admin",

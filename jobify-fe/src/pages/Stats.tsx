@@ -1,45 +1,26 @@
-import {
-  FaSuitcaseRolling,
-  FaCalendarCheck,
-  FaBug,
-  FaAddressBook,
-} from "react-icons/fa";
-import Wrapper from "../assets/wrappers/StatsContainer";
-import StatItem from "../components/StatItem";
+import React from "react";
 
-const Stats = () => {
+import { ChartsContainer, StatsContainer } from "../components";
+import { useLoaderData } from "react-router-dom";
+import { JobStatistics } from "../types";
+import { defaultStatsContext } from "../const";
+
+const StatsContext = React.createContext<JobStatistics>(defaultStatsContext);
+const Stats: React.FC = () => {
+  const stats = useLoaderData() as JobStatistics;
+
+  if (stats.stats === undefined || stats.monthlyStats === undefined) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
-    <Wrapper>
-      <StatItem
-        title="Pending"
-        color="#e9b949"
-        count={1}
-        bcg="#fcefc7"
-        icon={<FaAddressBook />}
-      />
-      <StatItem
-        title="Interview"
-        count={1}
-        color="#647acb"
-        bcg="#e0e8f9"
-        icon={<FaSuitcaseRolling />}
-      />
-      <StatItem
-        title="Hired"
-        count={1}
-        color="#128a52"
-        bcg="#74dbad"
-        icon={<FaCalendarCheck />}
-      />
-      <StatItem
-        title="Declined"
-        count={1}
-        color="#d66a6a"
-        bcg="#ffeeee"
-        icon={<FaBug />}
-      />
-    </Wrapper>
+    <StatsContext.Provider value={stats}>
+      <StatsContainer />
+      {stats.monthlyStats?.length > 1 && <ChartsContainer />}
+    </StatsContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const useStatsContext = () => React.useContext(StatsContext);
 export default Stats;
