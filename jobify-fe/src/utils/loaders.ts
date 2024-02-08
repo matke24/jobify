@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect } from "react-router-dom";
+import type { LoaderFunctionArgs } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { resolveError } from ".";
 import { AxiosResponse } from "axios";
 import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
-import { createRestClient } from "../service";
-import { jobService as JobService } from "../service";
+import { createRestClient, jobService as JobService } from "../service";
+
+const jobService = JobService();
 
 export const dashboardLoader = async (): Promise<
   AxiosResponse<UserData> | unknown
@@ -14,7 +17,7 @@ export const dashboardLoader = async (): Promise<
   try {
     const { data }: AxiosResponse = await createRestClient().get<UserData>(
       "/users/current-user"
-    );
+    ); // user service
 
     if (!data) {
       throw new Error(FAILED_TO_LOAD_USER);
@@ -28,7 +31,7 @@ export const dashboardLoader = async (): Promise<
 
 export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
   try {
-    const { data } = await createRestClient().get<JobData[]>("/jobs");
+    const data = await jobService.getAllJobs();
     if (!data) {
       throw new Error(FAILED_TO_LOAD_USER);
     }
@@ -38,17 +41,11 @@ export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
   }
 };
 
-export const singleJobLoader = async ({
-  params,
-}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-any) => {
+export const singleJobLoader = async ({ params }: LoaderFunctionArgs) => {
   try {
-    const { data } = await createRestClient().get<JobData>(
-      `/jobs/${params.id}`
-    );
+    const data = await jobService.getSingleJob(params.id as string);
     return data;
   } catch (err) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return resolveError(err, "/dashboard/all-jobs");
   }
 };
@@ -57,7 +54,7 @@ export const adminLoader = async () => {
   try {
     const { data } = await createRestClient().get<AdminResponse>(
       `users/admin/app-stats`
-    );
+    ); // user service
     return data;
   } catch (err) {
     return resolveError(err, "/dashboard");
@@ -65,7 +62,6 @@ export const adminLoader = async () => {
 };
 
 export const statsLoader = async () => {
-  const jobService = JobService();
   try {
     const data: JobStatistics = await jobService.getJobStats();
     return data;

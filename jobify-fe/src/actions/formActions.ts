@@ -17,7 +17,7 @@ export const createAuthForm =
     }
 
     try {
-      await createRestClient().post(path, data);
+      await createRestClient().post(path, data); // user service
       toast.success(isRegisterForm(path));
       return redirect(relocate);
     } catch (error: unknown) {
