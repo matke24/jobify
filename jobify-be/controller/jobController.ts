@@ -75,6 +75,5 @@ export const jobStats = async (req: Request, res: Response) => {
 
   const stats: JobStats = await getUserJobStats(match);
   const monthlyStats: JobMonthlyStats[] = await getJobMonthlyStats(match);
-
   return res.status(StatusCode.OK).json({ stats, monthlyStats });
 };

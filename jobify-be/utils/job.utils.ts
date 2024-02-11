@@ -1,4 +1,3 @@
-import { DEFAULT_STATS } from "../const/index.js";
 import {
   JobStatsDbResponse,
   JobStats,
@@ -15,6 +14,13 @@ export const getUserJobStats = async (match: any): Promise<JobStats> => {
     { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
   ]);
 
+  const DEFAULT_STATS = {
+    pending: 0,
+    interview: 0,
+    hired: 0,
+    declined: 0,
+    totalJobs: 0,
+  };
   const stats: JobStats = dbStats.reduce(
     (acc: JobStats, job: JobStatsDbResponse) => {
       const { _id: title, count } = job;

@@ -16,7 +16,7 @@ const Stats: React.FC = () => {
   return (
     <StatsContext.Provider value={stats}>
       <StatsContainer />
-      {stats.monthlyStats?.length > 1 && <ChartsContainer />}
+      {stats.monthlyStats?.length !== 0 && <ChartsContainer />}
     </StatsContext.Provider>
   );
 };
