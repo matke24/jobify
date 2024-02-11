@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { resolveError } from "../utils";
 import { jobService as JobService } from "../service/jobService";
 import { FormEntryData } from "../types";
-import { createRestClient } from "../service";
 
 const jobService = JobService();
 
@@ -27,9 +26,13 @@ export const editJobAction = async ({
   const formData: FormData = await request.formData();
   const data: FormEntryData = Object.fromEntries(formData);
 
+  if (params.id === undefined) {
+    return redirect("/dashboard/all-jobs");
+  }
+
   try {
-    await createRestClient().patch(`/jobs/${params.id}`, data);
-    toast.success("Job created");
+    await jobService.editJob(params.id, data);
+    toast.success("Job updated");
     return redirect("/dashboard/all-jobs");
   } catch (err) {
     return resolveError(err);
