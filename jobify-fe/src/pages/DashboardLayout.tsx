@@ -34,7 +34,7 @@ const DashboardLayout = () => {
     // In this case it is LogoutMessage
     const logout: AxiosResponse<ErrorMessage> = await createRestClient().get(
       "/auth/logout"
-    ); // user service
+    ); // auth service
     navigate("/login");
     toast.success(logout.data.message);
   };

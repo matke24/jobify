@@ -4,12 +4,13 @@ import { createAuthForm } from ".";
 import { UPLOAD_IMAGE_SIZE_LIMIT } from "../const";
 
 import { resolveError } from "../utils";
-import { createRestClient } from "../service";
+import { userService as UserService } from "../service/userService";
 
 export const formActionLogin = createAuthForm("/auth/login", "/dashboard");
 export const formActionRegister = createAuthForm("/auth/register", "/login");
 
 export const updateUserAction = async ({ request }: ActionFunctionArgs) => {
+  const userService = UserService();
   const formData = await request.formData();
   const file = formData.get("avatar");
 
@@ -24,7 +25,7 @@ export const updateUserAction = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    await createRestClient().patch("/users/update-user", formData);
+    await userService.updateUser(formData);
     toast.success("User updated successfully");
   } catch (e) {
     return resolveError(e);

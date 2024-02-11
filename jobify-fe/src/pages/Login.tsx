@@ -16,7 +16,7 @@ const Login = () => {
     };
 
     try {
-      await createRestClient().post("/auth/login", data); // user service
+      await createRestClient().post("/auth/login", data); // auth service
       toast.success("Test application");
       navigate("/dashboard");
     } catch (e) {

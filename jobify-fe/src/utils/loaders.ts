@@ -8,16 +8,16 @@ import { AxiosResponse } from "axios";
 import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 import { createRestClient, jobService as JobService } from "../service";
+import { userService as UserService } from "../service/userService";
 
 const jobService = JobService();
+const userService = UserService();
 
 export const dashboardLoader = async (): Promise<
   AxiosResponse<UserData> | unknown
 > => {
   try {
-    const { data }: AxiosResponse = await createRestClient().get<UserData>(
-      "/users/current-user"
-    ); // user service
+    const data = await userService.getCurrentUser();
 
     if (!data) {
       throw new Error(FAILED_TO_LOAD_USER);
