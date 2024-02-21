@@ -21,12 +21,13 @@ import {
 import {
   getJobMonthlyStats,
   getUserJobStats,
+  handlePagination,
   isUserAdmin,
   setAuthorNames,
 } from "../utils/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const { search, jobStatus, jobType } = req.query;
+  const { search, jobStatus, jobType, showJobs, page } = req.query;
   const query: QueryOptions = isUserAdmin(req.user as JWToken)
     ? {
         author: { $ne: TEST_USER },
@@ -46,15 +47,34 @@ export const getAllJobs = async (req: Request, res: Response) => {
     query.jobStatus = jobStatus;
   }
 
-  const sortKey =
-    sortOptions.get(req.query.sort as JobSort) ||
-    sortOptions.get(JobSort.NEWEST_FIRST);
+  if (jobType && jobType !== "all") {
+    query.jobType = jobType;
+  }
 
-  const jobs: JobBackendModel[] = await Job.find(query).sort(sortKey);
+  const sortKey = sortOptions.get(
+    (req.query.sort as JobSort) || JobSort.NEWEST_FIRST
+  );
+
+  const totalJobs: number = await Job.countDocuments(query);
+  const { skip, limit, totalPages, currentPage } = handlePagination(
+    totalJobs,
+    page as string,
+    showJobs as string
+  );
+
+  const jobs: JobBackendModel[] = await Job.find(query)
+    .sort(sortKey)
+    .skip(skip)
+    .limit(limit);
   const users: UserBackendModel[] = await User.find({});
   const jobsWithName: JobBackendModel[] = setAuthorNames(jobs, users);
 
-  res.status(StatusCode.OK).json({ jobs: jobsWithName });
+  res.status(StatusCode.OK).json({
+    totalJobs: totalJobs,
+    totalPages: totalPages,
+    currentPage: currentPage,
+    jobs: jobsWithName,
+  });
 };
 
 export const getSingleJob = async (req: Request, res: Response) => {
