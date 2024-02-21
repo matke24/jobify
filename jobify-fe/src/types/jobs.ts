@@ -1,4 +1,4 @@
-import { JobStatus, JobType } from "../enum";
+import { JobSort, JobStatus, JobType } from "../enum";
 
 export interface JobData {
   _id: string;
@@ -26,6 +26,13 @@ export interface JobsWithPagination {
 }
 export interface Job {
   job: JobData;
+}
+
+export interface JobRequestParams {
+  search?: string;
+  jobType?: JobType;
+  jobStatus?: JobStatus;
+  sort?: JobSort;
 }
 
 // TODO: fix everything above this line

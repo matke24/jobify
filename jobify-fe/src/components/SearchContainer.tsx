@@ -1,9 +1,10 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 // import { JobsWithPagination } from "../types";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from ".";
 import FormRowSelect from "./FormRowSelect";
 import { JobSort, JobStatus, JobType } from "../enum";
+import SubmitButton from "./SubmitButton";
 
 const SearchContainer = () => {
   // const data = useLoaderData() as JobsWithPagination;
@@ -29,7 +30,16 @@ const SearchContainer = () => {
             name="jobStatus"
             list={["all", ...Object.values(JobStatus)]}
           />
-          <FormRowSelect name="Sort" list={Object.values(JobSort)} />
+          <FormRowSelect
+            label="Sort"
+            name="sort"
+            list={Object.values(JobSort)}
+            defaultValue={JobSort.ASCENDING}
+          />
+          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
+            Clear
+          </Link>
+          <SubmitButton formButton />
         </div>
       </Form>
     </Wrapper>

@@ -1,4 +1,4 @@
-import { JobStatus, JobType } from "../enum";
+import { JobSort, JobStatus, JobType } from "../enum";
 
 export interface FormRowProps {
   id: string;
@@ -15,5 +15,5 @@ export interface FromRowSelectProps {
   name: string;
   label?: string;
   list: string[];
-  defaultValue?: JobStatus | JobType;
+  defaultValue?: JobStatus | JobType | JobSort;
 }

@@ -1,9 +1,14 @@
 import { AxiosInstance } from "axios";
-import { FormEntryData, JobData, JobStatistics } from "../types";
+import {
+  FormEntryData,
+  JobData,
+  JobRequestParams,
+  JobStatistics,
+} from "../types";
 import { createRestClient } from ".";
 
 interface IJobService {
-  getAllJobs: () => Promise<JobData[]>;
+  getAllJobs: (req?: JobRequestParams) => Promise<JobData[]>;
   getSingleJob: (id: string) => Promise<JobData>;
   createJob: (data: FormEntryData) => Promise<void>;
   editJob: (id: string, data: FormEntryData) => Promise<void>;
@@ -15,7 +20,11 @@ export const jobService = (): IJobService => {
   const client: AxiosInstance = createRestClient({ baseUrl: "/jobs" });
 
   return {
-    async getAllJobs() {
+    async getAllJobs(req?: JobRequestParams) {
+      if (req) {
+        const { data } = await client.get<JobData[]>("", { params: req });
+        return data;
+      }
       const { data } = await client.get<JobData[]>("");
       return data;
     },
