@@ -278,6 +278,9 @@ button:disabled {
   letter-spacing: var(--letter-spacing);
   text-transform: capitalize;
 }
+select {
+  text-transform: capitalize;
+}
 /* alert */
 
 @keyframes spinner {

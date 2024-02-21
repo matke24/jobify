@@ -11,6 +11,7 @@ export interface FormRowProps {
 }
 
 export interface FromRowSelectProps {
+  className?: string;
   name: string;
   label?: string;
   list: string[];
