@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
-import { Jobs } from "../types";
+import { JobsWithPagination } from "../types";
 import SearchContainer from "../components/SearchContainer";
 import JobsContainer from "../components/JobsContainer";
 
 const AllJobsContext = createContext({});
 const AllJobs = () => {
-  const { jobs } = useLoaderData() as Jobs;
+  const { pagination, jobs } = useLoaderData() as JobsWithPagination;
   return (
-    <AllJobsContext.Provider value={{ jobs }}>
+    <AllJobsContext.Provider value={{ pagination, jobs }}>
       <SearchContainer />
       <JobsContainer />
     </AllJobsContext.Provider>

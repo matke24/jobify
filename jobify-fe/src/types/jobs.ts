@@ -14,7 +14,14 @@ export interface JobData {
   __v: number;
 }
 
-export interface Jobs {
+export interface Pagination {
+  totalPages: number;
+  currentPage: number;
+  totalJobs: number;
+}
+
+export interface JobsWithPagination {
+  pagination: Pagination;
   jobs: JobData[];
 }
 export interface Job {

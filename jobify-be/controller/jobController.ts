@@ -70,9 +70,11 @@ export const getAllJobs = async (req: Request, res: Response) => {
   const jobsWithName: JobBackendModel[] = setAuthorNames(jobs, users);
 
   res.status(StatusCode.OK).json({
-    totalJobs: totalJobs,
-    totalPages: totalPages,
-    currentPage: currentPage,
+    pagination: {
+      totalPages,
+      currentPage,
+      totalJobs,
+    },
     jobs: jobsWithName,
   });
 };
