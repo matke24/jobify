@@ -1,4 +1,4 @@
-import { JobStatus, JobType } from "../enum";
+import { JobSort, JobStatus, JobType } from "../enum";
 
 export interface FormRowProps {
   id: string;
@@ -8,11 +8,13 @@ export interface FormRowProps {
   required?: boolean;
   label?: string;
   defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface FromRowSelectProps {
+  className?: string;
   name: string;
   label?: string;
   list: string[];
-  defaultValue?: JobStatus | JobType;
+  defaultValue?: JobStatus | JobType | JobSort | "all";
 }

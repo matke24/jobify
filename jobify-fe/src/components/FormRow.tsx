@@ -23,6 +23,7 @@ const FormRow: React.FC<FormRowProps> = (props) => {
         placeholder={placeholder || ""}
         required={required || false}
         defaultValue={defaultValue}
+        onChange={props.onChange}
       />
     </div>
   );

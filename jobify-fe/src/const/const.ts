@@ -1,6 +1,7 @@
 import { JobStatistics } from "../types";
 
 export const UPLOAD_IMAGE_SIZE_LIMIT = 524_288;
+export const DEBOUNCE_INTERVAL = 700;
 
 export const defaultStatsContext: JobStatistics = {
   stats: {

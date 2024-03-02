@@ -4,7 +4,6 @@ import type { LoaderFunctionArgs } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { resolveError } from ".";
-import { AxiosResponse } from "axios";
 import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 import { createRestClient, jobService as JobService } from "../service";
@@ -13,9 +12,7 @@ import { userService as UserService } from "../service/userService";
 const jobService = JobService();
 const userService = UserService();
 
-export const dashboardLoader = async (): Promise<
-  AxiosResponse<UserData> | unknown
-> => {
+export const dashboardLoader = async (): Promise<UserData | unknown> => {
   try {
     const data = await userService.getCurrentUser();
 
@@ -29,13 +26,24 @@ export const dashboardLoader = async (): Promise<
   }
 };
 
-export const allJobsLoader = async (): Promise<JobData[] | unknown> => {
+export const allJobsLoader = async ({
+  request,
+}: LoaderFunctionArgs): Promise<JobData[] | unknown> => {
+  const reqParams = Object.fromEntries([
+    ...new URL(request.url).searchParams.entries(),
+  ]);
   try {
-    const data = await jobService.getAllJobs();
-    if (!data) {
+    const { jobs, pagination } = await jobService.getAllJobs(reqParams);
+    if (!jobs) {
       throw new Error(FAILED_TO_LOAD_USER);
     }
-    return data;
+    return {
+      jobs,
+      pagination,
+      searchValue: {
+        ...reqParams,
+      },
+    };
   } catch (error) {
     return resolveError(error);
   }

@@ -14,3 +14,10 @@ export interface JobBackendModel {
   authorName?: string;
   _v: number;
 }
+
+export interface JobPagination {
+  currentPage: number;
+  limit: number;
+  skip: number;
+  totalPages: number;
+}

@@ -1,5 +1,5 @@
 import "express-async-errors";
-import mongoose from "mongoose";
+import mongoose, { QueryOptions } from "mongoose";
 import { Request, Response } from "express";
 
 import Job from "../models/JobModel.js";
@@ -12,26 +12,71 @@ import {
   JobStats,
   UserBackendModel,
 } from "../types";
-import { StatusCode } from "../enum/index.js";
-import { SUCCESSFULLY_UPDATED, TEST_USER } from "../const/index.js";
+import { JobSort, StatusCode } from "../enum/index.js";
+import {
+  SUCCESSFULLY_UPDATED,
+  TEST_USER,
+  sortOptions,
+} from "../const/index.js";
 import {
   getJobMonthlyStats,
   getUserJobStats,
+  handlePagination,
   isUserAdmin,
   setAuthorNames,
 } from "../utils/index.js";
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  const query = isUserAdmin(req.user as JWToken)
-    ? { author: { $ne: TEST_USER } }
+  const { search, jobStatus, jobType, showJobs, page } = req.query;
+  const query: QueryOptions = isUserAdmin(req.user as JWToken)
+    ? {
+        author: { $ne: TEST_USER },
+      }
     : {
         author: req.user?.userId,
       };
-  const jobs: JobBackendModel[] = await Job.find(query);
+
+  if (search) {
+    query.$or = [
+      { position: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  if (jobStatus && jobStatus !== "all") {
+    query.jobStatus = jobStatus;
+  }
+
+  if (jobType && jobType !== "all") {
+    query.jobType = jobType;
+  }
+
+  const sortKey = sortOptions.get(
+    (req.query.sort as JobSort) || JobSort.NEWEST_FIRST
+  );
+
+  const totalJobs: number = await Job.countDocuments(query);
+  const { skip, limit, totalPages, currentPage } = handlePagination(
+    totalJobs,
+    page as string,
+    showJobs as string
+  );
+
+  const jobs: JobBackendModel[] = await Job.find(query)
+    .sort(sortKey)
+    .skip(skip)
+    .limit(limit);
   const users: UserBackendModel[] = await User.find({});
   const jobsWithName: JobBackendModel[] = setAuthorNames(jobs, users);
 
-  res.status(StatusCode.OK).json({ jobs: jobsWithName });
+  res.status(StatusCode.OK).json({
+    pagination: {
+      totalPages,
+      currentPage,
+      totalJobs,
+    },
+    jobs: jobsWithName,
+  });
 };
 
 export const getSingleJob = async (req: Request, res: Response) => {

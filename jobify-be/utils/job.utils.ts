@@ -2,11 +2,12 @@ import {
   JobStatsDbResponse,
   JobStats,
   JobMonthlyStats,
+  JobPagination,
   MonthlyJobStatsDbResponse,
 } from "../types/index.js";
 import Job from "../models/JobModel.js";
-import { match } from "assert";
 import dayjs from "dayjs";
+import { BadRequestError } from "../error/customErrors.js";
 
 export const getUserJobStats = async (match: any): Promise<JobStats> => {
   const dbStats: JobStatsDbResponse[] = await Job.aggregate([
@@ -71,4 +72,21 @@ export const getJobMonthlyStats = async (
     .reverse();
 
   return monthlyStats;
+};
+
+export const handlePagination = (
+  totalJobs: number,
+  page: string,
+  showJobs: string
+): JobPagination => {
+  const currentPage = parseInt(page as string) || 1;
+  const limit = parseInt(showJobs as string) || 10;
+  const skip = (currentPage - 1) * limit;
+  const totalPages = Math.ceil(totalJobs / limit);
+
+  if (limit < 0 || currentPage < 0) {
+    throw new BadRequestError("Invalid page or limit");
+  }
+
+  return { currentPage, limit, skip, totalPages };
 };
