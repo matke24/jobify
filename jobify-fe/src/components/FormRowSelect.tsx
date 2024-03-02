@@ -9,7 +9,7 @@ const FormRowSelect: React.FC<FromRowSelectProps> = (props) => {
         {label || name}
       </label>
       <select
-        className={`form-select ${className}`}
+        className={className ? `form-select ${className}` : "form-select"}
         name={name}
         id={name}
         defaultValue={defaultValue}

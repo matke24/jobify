@@ -8,6 +8,7 @@ export interface FormRowProps {
   required?: boolean;
   label?: string;
   defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface FromRowSelectProps {

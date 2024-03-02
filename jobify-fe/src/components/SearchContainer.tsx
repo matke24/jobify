@@ -1,17 +1,29 @@
-import { Form, Link } from "react-router-dom";
-// import { JobsWithPagination } from "../types";
+import { Form, Link, SubmitFunction, useSubmit } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from ".";
 import FormRowSelect from "./FormRowSelect";
 import { JobSort, JobStatus, JobType } from "../enum";
-import SubmitButton from "./SubmitButton";
+import { DEBOUNCE_INTERVAL } from "../const";
 
 const SearchContainer = () => {
-  // const data = useLoaderData() as JobsWithPagination;
+  const submitHandler: SubmitFunction = useSubmit();
 
   return (
     <Wrapper>
-      <Form className="form">
+      <Form
+        className="form"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onChange={(e: any) => {
+          if (e.target.name === "search") {
+            const currentTarget = e.currentTarget;
+            setTimeout(() => {
+              submitHandler(currentTarget);
+            }, DEBOUNCE_INTERVAL);
+            return;
+          }
+          submitHandler(e.currentTarget);
+        }}
+      >
         <h5 className="form-title">Search Form</h5>
         <div className="form-center">
           <FormRow
@@ -39,7 +51,6 @@ const SearchContainer = () => {
           <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
             Clear
           </Link>
-          <SubmitButton formButton />
         </div>
       </Form>
     </Wrapper>
