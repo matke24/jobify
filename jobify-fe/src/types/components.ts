@@ -16,5 +16,5 @@ export interface FromRowSelectProps {
   name: string;
   label?: string;
   list: string[];
-  defaultValue?: JobStatus | JobType | JobSort;
+  defaultValue?: JobStatus | JobType | JobSort | "all";
 }

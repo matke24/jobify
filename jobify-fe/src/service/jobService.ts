@@ -4,11 +4,12 @@ import {
   JobData,
   JobRequestParams,
   JobStatistics,
+  JobsWithPagination,
 } from "../types";
 import { createRestClient } from ".";
 
 interface IJobService {
-  getAllJobs: (req?: JobRequestParams) => Promise<JobData[]>;
+  getAllJobs: (req?: JobRequestParams) => Promise<JobsWithPagination>;
   getSingleJob: (id: string) => Promise<JobData>;
   createJob: (data: FormEntryData) => Promise<void>;
   editJob: (id: string, data: FormEntryData) => Promise<void>;
@@ -22,10 +23,12 @@ export const jobService = (): IJobService => {
   return {
     async getAllJobs(req?: JobRequestParams) {
       if (req) {
-        const { data } = await client.get<JobData[]>("", { params: req });
+        const { data } = await client.get<JobsWithPagination>("", {
+          params: req,
+        });
         return data;
       }
-      const { data } = await client.get<JobData[]>("");
+      const { data } = await client.get<JobsWithPagination>("");
       return data;
     },
     getSingleJob: async (id: string) => {

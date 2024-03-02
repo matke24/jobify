@@ -21,8 +21,9 @@ export interface Pagination {
 }
 
 export interface JobsWithPagination {
-  pagination: Pagination;
   jobs: JobData[];
+  pagination: Pagination;
+  searchValue?: JobRequestParams;
 }
 export interface Job {
   job: JobData;

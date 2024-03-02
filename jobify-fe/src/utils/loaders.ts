@@ -33,11 +33,17 @@ export const allJobsLoader = async ({
     ...new URL(request.url).searchParams.entries(),
   ]);
   try {
-    const data = await jobService.getAllJobs(reqParams);
-    if (!data) {
+    const { jobs, pagination } = await jobService.getAllJobs(reqParams);
+    if (!jobs) {
       throw new Error(FAILED_TO_LOAD_USER);
     }
-    return data;
+    return {
+      jobs,
+      pagination,
+      searchValue: {
+        ...reqParams,
+      },
+    };
   } catch (error) {
     return resolveError(error);
   }
