@@ -41,9 +41,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(express.static(path.resolve(__dirname, "public")));
+app.use(express.static(path.resolve(__dirname, "../public")));
 
-console.log(path.resolve(__dirname, "public"));
 app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
 app.use(`${API_URL}/users`, authenticateUser, userRouter);
 app.use(`${API_URL}/auth`, authRouter);
