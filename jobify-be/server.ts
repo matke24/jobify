@@ -32,7 +32,6 @@ cloudinary.config({
 const app: Express = express();
 const port = process.env.PORT || 5100;
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const baseDirectory = path.join(__dirname, "../");
 
 app.use(cors());
 app.use(cookieParser());
@@ -42,7 +41,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(express.static(path.resolve(baseDirectory, "./public")));
+app.use(express.static(path.resolve(__dirname, "public")));
+
+console.log(path.resolve(__dirname, "public"));
 app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
 app.use(`${API_URL}/users`, authenticateUser, userRouter);
 app.use(`${API_URL}/auth`, authRouter);
