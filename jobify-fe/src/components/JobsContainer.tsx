@@ -19,6 +19,7 @@ const JobsContainer: React.FC = () => {
 
   return (
     <Wrapper>
+<<<<<<< HEAD
       <div className="form-header">
         <h5>Total: {pagination.totalJobs}</h5>
         <button
@@ -30,12 +31,22 @@ const JobsContainer: React.FC = () => {
           Create job
         </button>
       </div>
+=======
+      <p
+        style={{
+          marginBottom: "30px",
+          paddingRight: "20px",
+          textAlign: "right",
+        }}
+      >
+        Total results: {pagination.totalJobs}
+      </p>
+>>>>>>> parent of e30216e (Merge pull request #52 from matke24/add-pagination)
       <div className="jobs">
         {jobs.map((job: JobData) => {
           return <Job key={job._id} {...job} />;
         })}
       </div>
-      {pagination.totalPages > 1 && <JobPagination />}
     </Wrapper>
   );
 };
