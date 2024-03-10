@@ -4,6 +4,9 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: "../jobify-be/public",
+  },
   server: {
     proxy: {
       "/api": {

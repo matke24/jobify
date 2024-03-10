@@ -8,6 +8,6 @@ export const createRestClient = (config?: { baseUrl: string }) => {
     });
   }
   return axios.create({
-    baseURL: `${BASE_URL}/${config.baseUrl}`,
+    baseURL: `${BASE_URL}${config.baseUrl}`,
   });
 };

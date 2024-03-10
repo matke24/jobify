@@ -5,7 +5,7 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { connect } from "./api/index.js";
+import { db_connect } from "./api/index.js";
 import { v2 as cloudinary } from "cloudinary";
 // Public
 import { dirname } from "path";
@@ -51,10 +51,14 @@ app.use("*", (_req: Request, res: Response) => {
   res.status(StatusCode.NOT_FOUND).json({ message: "Resource not found" });
 });
 
+app.get("*", (_req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "../public/index.html"));
+});
+
 app.use(errorHandlerMiddleware);
 
 try {
-  connect();
+  db_connect();
   app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
   });
