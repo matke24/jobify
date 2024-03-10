@@ -6,6 +6,9 @@ import { UnauthenticatedError } from "../error/customErrors.js";
 import { UserBackendModel } from "../types/user.types.js";
 import { createJWT } from "../utils/token.js";
 import { ONE_DAY_IN_MS, COOKIE_NAME, TEST_USER } from "../const/index.js";
+import { environment } from "../config.js";
+
+const { environmentMode } = environment();
 
 export const registerController = async (req: Request, res: Response) => {
   const isFirstUser = (await User.countDocuments()) === 0;
@@ -37,7 +40,7 @@ export const loginController = async (req: Request, res: Response) => {
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY_IN_MS),
-    secure: process.env.NODE_ENV === "production",
+    secure: environmentMode === "production",
   });
   res.status(StatusCode.OK).json({ message: "Success" });
 };

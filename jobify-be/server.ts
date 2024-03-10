@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -22,22 +19,31 @@ import { StatusCode } from "./enum/index.js";
 import { API_URL } from "./const/index.js";
 // Middlewares
 import { authenticateUser } from "./middleware/index.js";
+import { environment } from "./config.js";
+
+const {
+  environmentMode,
+  server_port,
+  cloud,
+  cloud_master_key,
+  cloud_secret_key,
+} = environment();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
+  cloud_name: cloud,
+  api_key: cloud_master_key,
+  api_secret: cloud_secret_key,
 });
 
 const app: Express = express();
-const port = process.env.PORT || 5100;
+const port = server_port || 5100;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-if (process.env.NODE_ENV === "development") {
+if (environmentMode === "development") {
   app.use(morgan("dev"));
 }
 

@@ -5,6 +5,9 @@ dotenv.config();
 
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
+import { environment } from "../config.js";
+
+const { database_key } = environment();
 
 const getMockData = async (): Promise<string | undefined> => {
   try {
@@ -19,7 +22,7 @@ const getMockData = async (): Promise<string | undefined> => {
 
 const mockJobData = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL as string);
+    await mongoose.connect(database_key as string);
     const user = await User.findOne({ email: "test@test.com" });
     const mockedInitialData = JSON.parse((await getMockData()) as string);
     const mockedJobs = mockedInitialData.map((job: any) => {
