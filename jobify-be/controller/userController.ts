@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import { promises as fs } from "fs";
+import { formatImage } from "../middleware/multerMiddleware.js";
 
 import { Request, Response, query } from "express";
 import { StatusCode, UserRole } from "../enum/index.js";
@@ -29,8 +29,13 @@ export const updateUser = async (req: Request, res: Response) => {
   delete newUser.password;
 
   if (req.file) {
-    const response = await cloudinary.uploader.upload(req.file.path);
-    await fs.unlink(req.file.path);
+    const formattedImage = formatImage(req.file);
+
+    if (!formatImage) {
+      return;
+    }
+
+    const response = await cloudinary.uploader.upload(formattedImage as string);
     newUser.avatar = response.secure_url;
     newUser.avatarPublicId = response.public_id;
   }
