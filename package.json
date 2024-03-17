@@ -6,6 +6,7 @@
   "scripts": {
     "build": "cd jobify-fe && npm run build && cd ../jobify-be && npm run build",
     "setup-project": "cd jobify-be && npm ci && cd ../jobify-fe && npm ci",
+    "setup-production": "npm run setup-project && npm run build",
     "start": "cd jobify-be && npm start",
     "server": "cd jobify-be && npm run dev",
     "client": "cd jobify-fe && npm run dev",
