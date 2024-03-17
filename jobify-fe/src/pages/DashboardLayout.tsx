@@ -1,6 +1,11 @@
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
-import { SmallSidebar, BigSidebar, Nav } from "../components";
+import { SmallSidebar, BigSidebar, Nav, Loading } from "../components";
 import { createContext, useContext, useState } from "react";
 import { DashboardContextProps, ErrorMessage, UserLoader } from "../types";
 import { DEFAULT_DASHBOARD_CONTEXT } from "../const";
@@ -15,6 +20,9 @@ const DashboardContext = createContext<DashboardContextProps>(
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
   const { user } = useLoaderData() as UserLoader;
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(checkDefaultTheme());
@@ -57,7 +65,7 @@ const DashboardLayout = () => {
           <div>
             <Nav />
             <div className="dashboard-page">
-              <Outlet context={{ user }} />
+              {isLoading ? <Loading /> : <Outlet context={{ user }} />}
             </div>
           </div>
         </main>

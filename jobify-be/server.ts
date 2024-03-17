@@ -48,16 +48,13 @@ if (environmentMode === "development") {
 }
 
 app.use(express.static(path.resolve(__dirname, "../public")));
+app.use(express.static(path.resolve(__dirname, "./public")));
 
 app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
 app.use(`${API_URL}/users`, authenticateUser, userRouter);
 app.use(`${API_URL}/auth`, authRouter);
 
-app.use("*", (_req: Request, res: Response) => {
-  res.status(StatusCode.NOT_FOUND).json({ message: "Resource not found" });
-});
-
-app.get("*", (_req: Request, res: Response) => {
+app.get("/*", (_req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "../public/index.html"));
 });
 
