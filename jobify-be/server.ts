@@ -42,13 +42,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "../public")));
 
 if (environmentMode === "development") {
   app.use(morgan("dev"));
 }
-
-app.use(express.static(path.resolve(__dirname, "../public")));
-app.use(express.static(path.resolve(__dirname, "./public")));
 
 app.use(`${API_URL}/jobs`, authenticateUser, jobRouter);
 app.use(`${API_URL}/users`, authenticateUser, userRouter);

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: "./",
   build: {
-    outDir: "../jobify-be/public --emptyOutDir",
+    outDir: "../jobify-be/public",
   },
   server: {
     proxy: {
