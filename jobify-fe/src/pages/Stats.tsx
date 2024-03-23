@@ -1,15 +1,16 @@
 import React from "react";
 
 import { ChartsContainer, StatsContainer } from "../components";
-import { useLoaderData } from "react-router-dom";
 import { JobStatistics } from "../types";
 import { defaultStatsContext } from "../const";
+import { useQuery } from "@tanstack/react-query";
+import { statsQuery } from "../query-service";
 
 const StatsContext = React.createContext<JobStatistics>(defaultStatsContext);
 const Stats: React.FC = () => {
-  const stats = useLoaderData() as JobStatistics;
+  const { data: stats } = useQuery(statsQuery);
 
-  if (stats.stats === undefined || stats.monthlyStats === undefined) {
+  if (!stats) {
     return <h2>Loading...</h2>;
   }
 

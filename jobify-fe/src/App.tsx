@@ -14,7 +14,7 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import {
@@ -34,6 +34,7 @@ import {
   statsLoader,
 } from "./utils";
 import { ErrorElement } from "./components";
+import { queryClient } from "./query-service";
 
 checkDefaultTheme();
 
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
-            loader: statsLoader,
+            loader: statsLoader(queryClient),
             errorElement: <ErrorElement />,
           },
           {
@@ -106,14 +107,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5min validity time
-    },
-  },
-});
 
 export default function App() {
   return (

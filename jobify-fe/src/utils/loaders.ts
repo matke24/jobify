@@ -3,10 +3,12 @@ import { redirect } from "react-router-dom";
 import type { LoaderFunctionArgs } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { AdminResponse, JobData, JobStatistics, UserData } from "../types";
+import { AdminResponse, JobData, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 import { createRestClient, jobService as JobService } from "../service";
 import { userService as UserService } from "../service/userService";
+import { statsQuery } from "../query-service";
+import { QueryClient } from "@tanstack/react-query";
 
 const jobService = JobService();
 const userService = UserService();
@@ -57,7 +59,7 @@ export const adminLoader = async () => {
   return data;
 };
 
-export const statsLoader = async () => {
-  const data: JobStatistics = await jobService.getJobStats();
+export const statsLoader = (queryClient: QueryClient) => async () => {
+  const data = await queryClient.ensureQueryData(statsQuery);
   return data;
 };
