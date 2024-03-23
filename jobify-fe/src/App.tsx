@@ -72,6 +72,7 @@ const router = createBrowserRouter([
             element: <EditJob />,
             loader: singleJobLoader,
             action: editJobAction,
+            errorElement: <ErrorElement />,
           },
           {
             path: "all-jobs",
@@ -89,6 +90,7 @@ const router = createBrowserRouter([
             path: "admin",
             element: <Admin />,
             loader: adminLoader,
+            errorElement: <ErrorElement />,
           },
           {
             path: "profile",

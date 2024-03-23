@@ -14,10 +14,6 @@ export const authenticateUser = (
   next: NextFunction
 ) => {
   const { user_token } = req.cookies;
-  if (!user_token) {
-    throw new UnauthenticatedError("Authentication invalid");
-  }
-
   try {
     const { userId, role }: JWToken = verifyJWT(user_token) as JWToken;
     const isTestUser = userId === TEST_USER;
