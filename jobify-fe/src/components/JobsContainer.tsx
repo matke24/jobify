@@ -24,7 +24,7 @@ const JobsContainer: React.FC = () => {
         <button
           className="btn form-btn header-btn"
           onClick={() => {
-            navigation("/dashboard");
+            navigation("/dashboard/add-job");
           }}
         >
           Create job

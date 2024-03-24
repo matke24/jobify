@@ -7,14 +7,14 @@ import { SmallSidebarLinks } from "../enum";
 
 const SMALL_SIDEBAR_LINKS = [
   {
-    text: SmallSidebarLinks.ADD_JOB,
+    text: SmallSidebarLinks.ALL_JOBS,
     path: ".",
-    icon: <FaWpforms />,
+    icon: <MdQueryStats />,
   },
   {
-    text: SmallSidebarLinks.ALL_JOBS,
-    path: "all-jobs",
-    icon: <MdQueryStats />,
+    text: SmallSidebarLinks.ADD_JOB,
+    path: "add-job",
+    icon: <FaWpforms />,
   },
   {
     text: SmallSidebarLinks.STATS,

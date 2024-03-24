@@ -65,6 +65,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+            element: <AllJobs />,
+            loader: allJobsLoader,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: "add-job",
             element: <AddJob />,
             action: addJobAction,
           },
@@ -75,12 +81,7 @@ const router = createBrowserRouter([
             action: editJobAction,
             errorElement: <ErrorElement />,
           },
-          {
-            path: "all-jobs",
-            element: <AllJobs />,
-            loader: allJobsLoader,
-            errorElement: <ErrorElement />,
-          },
+
           {
             path: "stats",
             element: <Stats />,
