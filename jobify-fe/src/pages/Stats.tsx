@@ -8,7 +8,7 @@ import { statsQuery } from "../query-service";
 
 const StatsContext = React.createContext<JobStatistics>(defaultStatsContext);
 const Stats: React.FC = () => {
-  const { data: stats } = useQuery(statsQuery);
+  const stats = useQuery(statsQuery).data;
 
   if (!stats) {
     return <h2>Loading...</h2>;

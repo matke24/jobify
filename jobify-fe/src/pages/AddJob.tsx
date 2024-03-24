@@ -1,14 +1,14 @@
-import { Form, useOutletContext } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from "../components";
 import FormRowSelect from "../components/FormRowSelect";
-import { UserLoader } from "../types";
 import { JobStatus, JobType } from "../enum";
 import SubmitButton from "../components/SubmitButton";
+import { useDashboardContext } from "./DashboardLayout";
 
 const AddJob = () => {
-  const { user } = useOutletContext() as UserLoader;
+  const { user } = useDashboardContext();
 
   return (
     <Wrapper>

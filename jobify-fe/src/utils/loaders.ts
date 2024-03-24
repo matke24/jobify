@@ -6,26 +6,20 @@ import { toast } from "react-toastify";
 import { AdminResponse, JobData, UserData } from "../types";
 import { FAILED_TO_LOAD_USER } from "../const";
 import { createRestClient, jobService as JobService } from "../service";
-import { userService as UserService } from "../service/userService";
-import { statsQuery } from "../query-service";
+import { statsQuery, userQuery } from "../query-service";
 import { QueryClient } from "@tanstack/react-query";
 
 const jobService = JobService();
-const userService = UserService();
 
-export const dashboardLoader = async (): Promise<UserData | unknown> => {
-  try {
-    const data = await userService.getCurrentUser();
-
-    if (!data) {
-      throw new Error(FAILED_TO_LOAD_USER);
+export const dashboardLoader =
+  (queryClient: QueryClient) => async (): Promise<UserData | unknown> => {
+    try {
+      return queryClient.ensureQueryData(userQuery);
+    } catch (error) {
+      toast.error(FAILED_TO_LOAD_USER);
+      return redirect("/login");
     }
-    return data;
-  } catch (error) {
-    toast.error(FAILED_TO_LOAD_USER);
-    return redirect("/login");
-  }
-};
+  };
 
 export const allJobsLoader = async ({
   request,
