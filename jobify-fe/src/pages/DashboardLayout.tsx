@@ -13,6 +13,7 @@ import { checkDefaultTheme, resolveThemeState } from "../utils";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { createRestClient } from "../service";
+import { queryClient } from "../query-service";
 
 const DashboardContext = createContext<DashboardContextProps>(
   DEFAULT_DASHBOARD_CONTEXT
@@ -43,6 +44,7 @@ const DashboardLayout = () => {
     const logout: AxiosResponse<ErrorMessage> = await createRestClient().get(
       "/auth/logout"
     ); // auth service
+    queryClient.invalidateQueries();
     navigate("/login");
     toast.success(logout.data.message);
   };
