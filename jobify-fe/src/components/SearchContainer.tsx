@@ -1,17 +1,17 @@
 import { Form, Link, SubmitFunction, useSubmit } from "react-router-dom";
-import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow } from ".";
 import FormRowSelect from "./FormRowSelect";
 import { JobSort, JobStatus, JobType } from "../enum";
 import { DEBOUNCE_INTERVAL } from "../const";
 import { useAllJobContext } from "../pages/AllJobs";
+import Accordion from "./Accordion";
 
 const SearchContainer = () => {
   const { searchValue } = useAllJobContext();
   const submitHandler: SubmitFunction = useSubmit();
 
   return (
-    <Wrapper>
+    <Accordion>
       <Form
         className="form"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +26,6 @@ const SearchContainer = () => {
           submitHandler(e.currentTarget);
         }}
       >
-        <h5 className="form-title">Search Form</h5>
         <div className="form-center">
           <FormRow
             type="search"
@@ -58,7 +57,7 @@ const SearchContainer = () => {
           </Link>
         </div>
       </Form>
-    </Wrapper>
+    </Accordion>
   );
 };
 
