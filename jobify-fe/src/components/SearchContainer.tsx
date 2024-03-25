@@ -52,7 +52,7 @@ const SearchContainer = () => {
             list={Object.values(JobSort)}
             defaultValue={searchValue?.sort || JobSort.NEWEST_FIRST}
           />
-          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
+          <Link to="/dashboard" className="btn form-btn delete-btn">
             Clear
           </Link>
         </div>
