@@ -1,11 +1,11 @@
-import { Form, useOutletContext } from "react-router-dom";
+import { Form } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
-import { UserLoader } from "../types";
 import { FormRow } from "../components";
 import SubmitButton from "../components/SubmitButton";
+import { useDashboardContext } from "./DashboardLayout";
 
 const Profile = () => {
-  const { user } = useOutletContext() as UserLoader;
+  const { user } = useDashboardContext();
 
   return (
     <Wrapper>

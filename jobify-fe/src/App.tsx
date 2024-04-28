@@ -14,6 +14,9 @@ import {
 } from "./pages";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import {
   addJobAction,
   editJobAction,
@@ -30,6 +33,8 @@ import {
   adminLoader,
   statsLoader,
 } from "./utils";
+import { ErrorElement } from "./components";
+import { queryClient } from "./query-service";
 
 checkDefaultTheme();
 
@@ -55,11 +60,17 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <DashboardLayout />,
-        loader: dashboardLoader,
+        element: <DashboardLayout queryClient={queryClient} />,
+        loader: dashboardLoader(queryClient),
         children: [
           {
             index: true,
+            element: <AllJobs />,
+            loader: allJobsLoader,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: "add-job",
             element: <AddJob />,
             action: addJobAction,
           },
@@ -68,21 +79,20 @@ const router = createBrowserRouter([
             element: <EditJob />,
             loader: singleJobLoader,
             action: editJobAction,
+            errorElement: <ErrorElement />,
           },
-          {
-            path: "all-jobs",
-            element: <AllJobs />,
-            loader: allJobsLoader,
-          },
+
           {
             path: "stats",
             element: <Stats />,
-            loader: statsLoader,
+            loader: statsLoader(queryClient),
+            errorElement: <ErrorElement />,
           },
           {
             path: "admin",
             element: <Admin />,
             loader: adminLoader,
+            errorElement: <ErrorElement />,
           },
           {
             path: "profile",
@@ -100,5 +110,10 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }

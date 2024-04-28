@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { createAuthForm } from ".";
 import { UPLOAD_IMAGE_SIZE_LIMIT } from "../const";
 
-import { resolveError } from "../utils";
 import { userService as UserService } from "../service/userService";
 
 export const formActionLogin = createAuthForm("/auth/login", "/dashboard");
@@ -24,12 +23,8 @@ export const updateUserAction = async ({ request }: ActionFunctionArgs) => {
     return null;
   }
 
-  try {
-    await userService.updateUser(formData);
-    toast.success("User updated successfully");
-  } catch (e) {
-    return resolveError(e);
-  }
+  await userService.updateUser(formData);
+  toast.success("User updated successfully");
 
   return null;
 };

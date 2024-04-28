@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { isRegisterForm, resolveError } from "../utils";
 import { MIN_PASSWORD_LENGTH, PASSWORD_TOO_SHORT } from "../const";
 import { createRestClient } from "../service";
+import { queryClient } from "../query-service";
 
 export const createAuthForm =
   (path: string, relocate: string) =>
@@ -18,7 +19,7 @@ export const createAuthForm =
 
     try {
       await createRestClient().post(path, data); // user service
-
+      queryClient.invalidateQueries();
       toast.success(isRegisterForm(path));
       return redirect(relocate);
     } catch (error: unknown) {

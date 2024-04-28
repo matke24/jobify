@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { Outlet, useNavigate, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { SmallSidebar, BigSidebar, Nav, Loading } from "../components";
 import { createContext, useContext, useState } from "react";
@@ -13,17 +8,22 @@ import { checkDefaultTheme, resolveThemeState } from "../utils";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import { createRestClient } from "../service";
+import { userQuery } from "../query-service";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 const DashboardContext = createContext<DashboardContextProps>(
   DEFAULT_DASHBOARD_CONTEXT
 );
 
-const DashboardLayout = () => {
+const DashboardLayout: React.FC<{ queryClient: QueryClient }> = ({
+  queryClient,
+}) => {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
 
-  const { user } = useLoaderData() as UserLoader;
+  const user = useQuery(userQuery).data as UserLoader | undefined;
+
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(checkDefaultTheme());
 
@@ -38,11 +38,16 @@ const DashboardLayout = () => {
     setShowSideBar(!showSideBar);
   };
 
+  if (!user) {
+    return null;
+  }
+
   const logoutUser = async () => {
     // In this case it is LogoutMessage
     const logout: AxiosResponse<ErrorMessage> = await createRestClient().get(
       "/auth/logout"
     ); // auth service
+    queryClient.invalidateQueries();
     navigate("/login");
     toast.success(logout.data.message);
   };
@@ -50,7 +55,7 @@ const DashboardLayout = () => {
   return (
     <DashboardContext.Provider
       value={{
-        user,
+        user: user.user,
         showSideBar,
         isDarkTheme,
         toggleDarkTheme,
@@ -65,7 +70,7 @@ const DashboardLayout = () => {
           <div>
             <Nav />
             <div className="dashboard-page">
-              {isLoading ? <Loading /> : <Outlet context={{ user }} />}
+              {isLoading ? <Loading /> : <Outlet context={user.user} />}
             </div>
           </div>
         </main>
