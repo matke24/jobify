@@ -1,10 +1,15 @@
 import React, { PropsWithChildren, useRef, useState } from "react";
 import Wrapper from "../assets/wrappers/Accordion";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
 const Accordion: React.FC<PropsWithChildren> = ({ children }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const rotateStyle = {
+    transform: isOpen ? "rotate(180deg)" : "",
+    transition: "transform 700ms ease",
+  };
 
   return (
     <Wrapper>
@@ -15,7 +20,9 @@ const Accordion: React.FC<PropsWithChildren> = ({ children }) => {
         }}
       >
         <h5 className="accordion-header-title">Search</h5>
-        <div>{isOpen ? <FaChevronUp /> : <FaChevronDown />}</div>
+        <div>
+          <FaChevronDown style={rotateStyle} />
+        </div>
       </div>
       <div
         className="accordion-children"
