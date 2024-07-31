@@ -13,7 +13,7 @@
     "version:major": "npm version major -git-tag-version false"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aleksa Matic",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
